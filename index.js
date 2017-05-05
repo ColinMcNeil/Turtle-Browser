@@ -21,7 +21,7 @@ var reloadSearch = function (placeholder,color='white') {
 doc.on("mousemove", function (event) {
     newHeight = $(window).height() - 20;
     if (event.pageY < 40 && !contentdown) {
-       
+        
     }
     else if(event.pageY > 40 && contentdown){
         
@@ -62,11 +62,21 @@ doc.ready(function () {
         if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
             console.log('up')
             $('#windowbar').slideDown();
+            newH = $(window).height()-20
+            content.animate({
+                top: '20px',
+                height: newH
+            })
             contentdown = true;
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && contentdown) {
             console.log('down')
             $('#windowbar').slideUp();
+            content.animate({
+                top: '0',
+
+                height: '100%'
+            })
             contentdown = false;
         }
     });
