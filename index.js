@@ -8,6 +8,7 @@ search = $('#search')
 doc = $(document)
 content = $("#content")
 contentdown = false;
+animating = false;
 
 var reloadSearch = function (placeholder,color='white') {
     search.select2({
@@ -60,23 +61,41 @@ doc.ready(function () {
     webview.addEventListener('did-fail-load', failload)
     doc.bind('mousewheel', function (e) {
         if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
+            console.log(animating)
             console.log('up')
-            $('#windowbar').slideDown();
-            newH = $(window).height()-20
-            content.animate({
-                top: '20px',
-                height: newH
-            })
+            newH = $(window).height() - 20
+            if (animating) {
+                $('#windowbar').css('top', '0px;');
+                content.css('top', '20px')
+                content.css('height', newH + 'px')
+            }
+            else {
+                $('#windowbar').animate({top:0});
+                animating = true;
+                content.animate({
+                    top: '20px',
+                    height: newH
+                }, function () { animating = false })
+            }
+            
             contentdown = true;
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && contentdown) {
+            console.log(animating)
             console.log('down')
-            $('#windowbar').slideUp();
-            content.animate({
-                top: '0',
-
-                height: '100%'
-            })
+            if (animating) {
+                $('#windowbar').css('top', '-20px');
+                content.css('top', '0')
+                content.css('height', '100%')
+            }
+            else {
+                animating = true;
+                $('#windowbar').animate({top:-20})
+                content.animate({
+                    top: '0',
+                    height: "100%"
+                }, function () { animating = false })
+            }
             contentdown = false;
         }
     });
