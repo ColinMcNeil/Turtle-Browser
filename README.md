@@ -11,7 +11,9 @@ A lightweight & highly optimized browser based on Electron.
  
 
 >  **Install & Test for Development:**   	
+>  
 >  `npm install`
+>
 >  `npm run test-win`
 >
 >  Or on Mac/Linux
@@ -22,4 +24,5 @@ A lightweight & highly optimized browser based on Electron.
 
 
 >  **Build for Deployment:**   	
+>
 >  `npm run dist`
