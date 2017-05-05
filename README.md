@@ -1,6 +1,5 @@
 **Turtle Browser**
 =====
-----------
 A lightweight & highly optimized browser based on Electron.
 
 **Current features:**
