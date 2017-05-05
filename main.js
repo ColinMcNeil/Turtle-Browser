@@ -1,7 +1,6 @@
-const { app, BrowserWindow, webContents }  = require('electron')
+const { app, BrowserWindow, webContents, ipcMain}  = require('electron')
 const path = require('path')
 const url = require('url')
-const { ipcMain } = require('electron')
 
 
 // Keep a global reference of the window object, if you don't, the window will

@@ -45,6 +45,10 @@ doc.on("mousemove", function (event) {
 doc.ready(function () {
     reloadSearch("Search")
     const webview = document.querySelector('webview')
+    require('electron-context-menu')({
+        window: webview
+    });
+
     const indicator = $('.indicator')
     console.log(webview.shadowRoot)
     webview.addEventListener('page-title-updated', function () {
@@ -59,9 +63,10 @@ doc.ready(function () {
         }
         reloadSearch(webview.getURL(),'white')
     })
-    webview.addEventListener('did-start-loading', function () {
-        //console.log('loaded')
-    })
+    webview.addEventListener('page-title-updated', function () {
+
+    });
+    webview.addEventListener('did-fail-load',failload)
 
     //var scrollPercent = 100 * $(containeR).scrollTop() / ($(containeD).height() - $(containeR).height());
 })
@@ -98,6 +103,7 @@ search.on("select2:close", function () {
 failload = function (error) {
     console.log(error)
     if (error.errorCode == -105) {
+        console.log('loading')
         webview.loadURL('http://google.com/search?q='+encodeURI(val))
     }
     if (!online) {

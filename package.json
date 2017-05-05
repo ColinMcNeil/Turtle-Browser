@@ -11,10 +11,11 @@
   "author": "Colin McNeil",
   "license": "ISC",
   "dependencies": {
+    "electron-context-menu": "^0.9.0",
     "jquery": "^3.2.1",
     "tldjs": "^1.7.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "electron": "^1.6.6"
   },
   "build": {

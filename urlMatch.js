@@ -8,8 +8,8 @@ const match = function (query) {
     }
     splitquery = query.split('.')
     domain = splitquery[splitquery.length - 2] + '.' + splitquery[splitquery.length - 1]
-    console.log('verifying ' + domain)
     if (tld.isValid(domain)) {
+        console.log('Valid!')
         return 'http://'+query
     }
     else {
