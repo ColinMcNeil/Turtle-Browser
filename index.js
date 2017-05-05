@@ -1,4 +1,5 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer, remote } = require('electron')
+const path = require('path')
 fs = require('fs')
 var lastid;
 var shown = true;
@@ -20,18 +21,10 @@ var reloadSearch = function (placeholder,color='white') {
 doc.on("mousemove", function (event) {
     newHeight = $(window).height() - 20;
     if (event.pageY < 40 && !contentdown) {
-        content.animate({
-            top: '20px',
-            height: newHeight
-        })
-        contentdown = true;
+       
     }
     else if(event.pageY > 40 && contentdown){
-        content.animate({
-            top: '0',
-            height: '100%'
-        })
-        contentdown = false;
+        
     }
     if (event.pageY > $(window).height()-40 && shown == false) {
         $("#mynavbar").slideDown();
@@ -48,11 +41,12 @@ doc.ready(function () {
     require('electron-context-menu')({
         window: webview
     });
-
     const indicator = $('.indicator')
     console.log(webview.shadowRoot)
     webview.addEventListener('page-title-updated', function () {
-        css = fs.readFileSync('scrollbar.css', 'utf8')
+        csspath = path.resolve(__dirname,'scrollbar.css')
+        console.log(csspath)
+        css = fs.readFileSync(csspath, 'utf8')
         webview.insertCSS(css);
         if (lastid) {
             $("option").each(function (index, obj) {
@@ -63,12 +57,19 @@ doc.ready(function () {
         }
         reloadSearch(webview.getURL(),'white')
     })
-    webview.addEventListener('page-title-updated', function () {
-
+    webview.addEventListener('did-fail-load', failload)
+    doc.bind('mousewheel', function (e) {
+        if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
+            console.log('up')
+            $('#windowbar').slideDown();
+            contentdown = true;
+        }
+        else if (e.originalEvent.wheelDelta / 120 <= 0 && contentdown) {
+            console.log('down')
+            $('#windowbar').slideUp();
+            contentdown = false;
+        }
     });
-    webview.addEventListener('did-fail-load',failload)
-
-    //var scrollPercent = 100 * $(containeR).scrollTop() / ($(containeD).height() - $(containeR).height());
 })
 
 $('#close').on('click', function () {
