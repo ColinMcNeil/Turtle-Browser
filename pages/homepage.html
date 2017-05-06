@@ -1,0 +1,67 @@
+<html>
+    <head></head>
+    <style>
+        @font-face{
+            src: url(../raleway.woff);
+            font-family:'raleway'
+        }
+        html,body{
+            width:100%;
+            height: 100%;
+            margin: 0;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,110,46,1) 0%,rgba(0,110,46,1) 100%);
+        }
+        #heading{
+            top: 10%;
+            position: relative;
+            color: white;
+            font-family: raleway;
+        }
+        #title{
+            
+            font-size:3rem;
+        }
+        .line{
+            color: rgb(200,200,200);
+            border-radius: 5px;
+        }
+        #logo{
+            width: 20%;
+            border: dashed white 1px;
+            border-radius: 1000px;
+            padding: 10px;
+            position: absolute;
+            transform: translateX(-50%);
+            top: 120%;
+            display: inline-block;
+        }
+        #logo:hover{
+            cursor: pointer;
+            border-color: blue;
+        }
+    </style>
+
+    <body>
+        <div id="heading">
+            <h1 id="title">
+                Turtle.
+            </h1>
+            <hr align="center" width="50%" class="line">
+            <h2 id="desc">
+                A minimalist browser.
+            </h2>
+            <img id="logo" src="img/logo.png"></img>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        $('#logo').on('click',function(){
+            $(this).animate({top:"-200%"}, function(){
+                location.href = 'about.html'
+            })
+        })
+    </script>
+</html>

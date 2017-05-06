@@ -22,3 +22,27 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     }, true);
 });
+// Reference: http://www.html5rocks.com/en/tutorials/speed/animations/
+
+var last_known_scroll_position = 0;
+var ticking = false;
+
+function scrollUpdate(scroll_pos) {
+    ipcRenderer.sendToHost('scrollY', scroll_pos);
+}
+
+window.addEventListener('scroll', function (e) {
+    last_known_scroll_position = window.scrollY;
+    if (!ticking) {
+        window.requestAnimationFrame(function () {
+            scrollUpdate(last_known_scroll_position);
+            ticking = false;
+        });
+    }
+    ticking = true;
+});
+
+ipcRenderer.on('scrollTo', function (event,args) {
+    console.log(event)
+    console.log(args)
+})

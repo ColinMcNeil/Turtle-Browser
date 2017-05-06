@@ -4,10 +4,10 @@
   "description": "A memory efficient and minimalist browser.",
   "main": "src\\main.js",
   "scripts": {
-    "test-win": "node node_modules\\uglify-js\\bin\\uglifyjs src\\index.js src\\urlMatch.js -o src-min\\out.js && node_modules\\electron\\dist\\electron.exe ." ,
+    "test-WIN": "node node_modules\\uglify-js\\bin\\uglifyjs src\\index.js src\\urlMatch.js -o src-min\\out.js && node_modules\\electron\\dist\\electron.exe ." ,
     "test-UNIX": "./node_modules/.bin/electron .",
     "pack": "build --dir",
-    "dist": "build"
+    "dist-win": "build"
   },
   "author": "Colin McNeil",
   "license": "ISC",

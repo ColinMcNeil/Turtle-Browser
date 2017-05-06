@@ -15,6 +15,8 @@ var tabContainer = []
 var overlayup = false
 var currentTabID = 0;
 var currentURL = ''
+var currentScroll = 0;
+var lastScroll = 0;
 
 var reloadSearch = function (placeholder, color = 'white') {
     search.select2({
@@ -75,12 +77,16 @@ var init_page = function () {
             clickedURL = event.args[0]
             if (clickedURL) { loadURL(event.args[0]) }
         }
-        
+        if (event.channel == "scrollY") {
+            currentScroll = event.args[0]
+            console.log(currentScroll)
+        }
     })
 }
 
 doc.ready(function () {
     $('.overlay').fadeOut(0)
+    $('#loadOverlay').remove();
     console.time("initpage");
     init_page()
     console.timeEnd("initpage");
@@ -154,11 +160,13 @@ search.on("select2:close", function () {
 /**
  * Load a URL in webview.
 */
-var loadURL = function (url) { //Defined as an external function for scoping with webview.
+var loadURL = function (url,scoll=0) { //Defined as an external function for scoping with webview.
+    lastScroll = currentScroll;
     console.log('Loading url '+url)
     webview.loadURL(url, {
         extraHeaders:"DNT:1"
     })
+    webview.send('scrollTo',scroll)
 }
 /**
  * Error handling script.
@@ -268,6 +276,7 @@ class tab{
 }
 
 doc.keyup(function (e) {
+    if (document.readyState !== 'complete'){return}
     if (e.keyCode == 18 && !overlayup) {
         $('.tabs').empty();
         img = webview.capturePage(function (image) {
