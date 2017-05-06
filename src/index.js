@@ -62,7 +62,9 @@ var init_page = function () {
 }
 doc.ready(function () {
     $('.overlay').fadeOut(0)
+    console.time("initpage");
     init_page()
+    console.timeEnd("initpage");
     doc.bind('mousewheel', function (e) {
         if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
             console.log(animating)
@@ -132,14 +134,13 @@ search.on("select2:close", function () {
 /**
  * Load a URL in webview.
 */
-var loadURL = function(url) { //Defined as an external function for scoping with webview.
+var loadURL = function (url) { //Defined as an external function for scoping with webview.
     webview.loadURL(url)
 }
 /**
  * Error handling script.
  */
 var failload = function (error) {
-    console.log(error)
     if (error.errorCode == -105) {
         console.log('loading')
         webview.loadURL('http://google.com/search?q=' + encodeURI(val))
