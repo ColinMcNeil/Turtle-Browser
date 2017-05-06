@@ -79,14 +79,29 @@ html,body{
 }
 .tabPreview{
     border: solid white 1px;
+    display: inline-block;
 }
 .tabPreview:hover{
     cursor: pointer;
 }
 .tabcontainer{
     padding: 5px;
-    height:200px;
+    width: auto;
+    text-align: center;
+    position: relative;
 }
 #newTab:hover{
     color: rgb(220,220,220)
+}
+.closeTab{
+    position: absolute;
+    display: block;
+    top: 7.5px;
+    right: 10px;
+    color: white;
+    float: right;
+}
+.closeTab:hover{
+    cursor: pointer;
+    color: grey;
 }
