@@ -1,7 +1,7 @@
 {
-  "name": "browser",
-  "version": "1.0.1",
-  "description": "A test browser",
+  "name": "Turtle Browser",
+  "version": "1.1.0",
+  "description": "A memory efficient and minimalist browser.",
   "main": "src\\main.js",
   "scripts": {
     "test-win": "node node_modules\\uglify-js\\bin\\uglifyjs src\\index.js src\\urlMatch.js -o src-min\\out.js && node_modules\\electron\\dist\\electron.exe ." ,
