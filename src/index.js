@@ -14,6 +14,7 @@ animating = false;
 var tabContainer = []
 var overlayup = false
 var currentTabID = 0;
+var currentURL = ''
 
 var reloadSearch = function (placeholder, color = 'white') {
     search.select2({
@@ -45,6 +46,7 @@ var init_page = function () {
     const indicator = $('.indicator')
     console.log(webview.shadowRoot)
     webview.addEventListener('page-title-updated', function () {
+
         csspath = path.resolve(__dirname, 'scrollbar.css')
         console.log(csspath)
         css = fs.readFileSync(csspath, 'utf8')
@@ -56,10 +58,30 @@ var init_page = function () {
                 }
             })
         }
+
+        if (currentURL != webview.getURL()) {
+            currentURL = webview.getURL()
+            loadURL(webview.getURL())
+
+        }
         reloadSearch(webview.getURL(), 'white')
     })
     webview.addEventListener('did-fail-load', failload)
+    
+    /**
+     * Handles link override:
+     * If a user clicks a link, the preload script interrupts it and sends the url here
+     * Allows injecting headers and programmatic control for every navigation.
+     */
+    webview.addEventListener('ipc-message', function (event) {
+        if (event.channel == "navAttempt") {
+            clickedURL = event.args[0]
+            if (clickedURL) { loadURL(event.args[0]) }
+        }
+        
+    })
 }
+
 doc.ready(function () {
     $('.overlay').fadeOut(0)
     console.time("initpage");
@@ -135,7 +157,10 @@ search.on("select2:close", function () {
  * Load a URL in webview.
 */
 var loadURL = function (url) { //Defined as an external function for scoping with webview.
-    webview.loadURL(url)
+    console.log('Loading url '+url)
+    webview.loadURL(url, {
+        extraHeaders:"DNT:1"
+    })
 }
 /**
  * Error handling script.
@@ -190,7 +215,7 @@ class tab{
         this.imgsrc = imgsrc;
         this.id = id;
         console.log('Constructor!')
-        this.currwebview = '<webview id="webview" tabID="'+this.id+'" style="visibility:visible" class="awebview" src="'+URL+'"></webview>'
+        this.currwebview = '<webview id="webview" preload="src/preload.js" tabID="'+this.id+'" style="visibility:visible" class="awebview" src="'+URL+'"></webview>'
     }
     /**
      * Function to convert tab into thumbnail HTML

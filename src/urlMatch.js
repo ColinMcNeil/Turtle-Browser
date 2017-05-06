@@ -20,3 +20,6 @@ const match = function (query) {
         return query;
     }
 }
+const getDomain = function (query) {
+    return query.split('://')[1].split('/')[0]
+}
