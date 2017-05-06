@@ -2,9 +2,9 @@
   "name": "browser",
   "version": "1.0.1",
   "description": "A test browser",
-  "main": "main.js",
+  "main": "src\\main.js",
   "scripts": {
-    "test-win": "node_modules\\electron\\dist\\electron.exe .",
+    "test-win": "node node_modules\\uglify-js\\bin\\uglifyjs src\\index.js src\\urlMatch.js -o src-min\\out.js && node_modules\\electron\\dist\\electron.exe ." ,
     "test-UNIX": "./node_modules/.bin/electron .",
     "pack": "build --dir",
     "dist": "build"
@@ -18,7 +18,8 @@
     "tldjs": "^1.7.0"
   },
   "devDependencies": {
-    "electron": "^1.6.6"
+    "electron": "^1.6.6",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "build": {
     "appId": "mcneil.browser",
