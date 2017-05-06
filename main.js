@@ -1,8 +1,6 @@
-const { app, BrowserWindow, webContents }  = require('electron')
+const { app, BrowserWindow, webContents, ipcMain }  = require('electron')
 const path = require('path')
 const url = require('url')
-const { ipcMain } = require('electron')
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -72,6 +70,3 @@ ipcMain.on('synchronous-message', (event, arg) => {
     }
     event.returnValue = 'Loading'
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

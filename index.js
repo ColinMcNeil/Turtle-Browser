@@ -15,7 +15,6 @@ var tabContainer = []
 var overlayup = false
 var currentTabID = 0;
 
-
 var reloadSearch = function (placeholder, color = 'white') {
     search.select2({
         placeholder: placeholder,
@@ -24,15 +23,8 @@ var reloadSearch = function (placeholder, color = 'white') {
     });
     search.siblings('.select2-container').find('.select2-selection__placeholder').css('color', color)
 }
-//NAVBAR
+//Navbar scroll detection
 doc.on("mousemove", function (event) {
-    newHeight = $(window).height() - 20;
-    if (event.pageY < 40 && !contentdown) {
-
-    }
-    else if (event.pageY > 40 && contentdown) {
-
-    }
     if (event.pageY > $(window).height() - 40 && shown == false) {
         $("#mynavbar").slideDown();
         shown = true;
@@ -42,19 +34,13 @@ doc.on("mousemove", function (event) {
         shown = false;
     }
 });
+//Initialize a page - Called on ready and loadTab.
 var init_page = function () {
     reloadSearch("Search")
     var webview = document.querySelector('#webview')
     console.log('Webview ' + webview)
     var contextMenu = require('electron-context-menu')({
         window: webview,
-        prepend: (params, browserWindow) => [
-            new MenuItem({
-                label: "New Tab",
-                click: newTab
-            })
-        ]
-
     });
     const indicator = $('.indicator')
     console.log(webview.shadowRoot)
@@ -76,7 +62,6 @@ var init_page = function () {
 }
 doc.ready(function () {
     $('.overlay').fadeOut(0)
-    
     init_page()
     doc.bind('mousewheel', function (e) {
         if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
@@ -96,7 +81,6 @@ doc.ready(function () {
                     height: newH
                 }, function () { animating = false })
             }
-
             contentdown = true;
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && contentdown) {
@@ -120,15 +104,12 @@ doc.ready(function () {
     });
 })
 $('#close').on('click', function () {
-    console.log('closed in web view')
     ipcRenderer.sendSync('synchronous-message', 'close')
 })
 $('#min').on('click', function () {
-    console.log('closed in web view')
     ipcRenderer.sendSync('synchronous-message', 'min')
 })
 $('#max').on('click', function () {
-    console.log('closed in web view')
     ipcRenderer.sendSync('synchronous-message', 'max')
 })
 $('#back').on('click', function () {
@@ -137,14 +118,9 @@ $('#back').on('click', function () {
 $('#forward').on('click', function () {
     webview.goForward()
 })
-  
-//search.unbind();
-console.log('Unbind')
 search.on("select2:select", function (e) {
-    console.log('Searched.')
     val = e.params.data.text;
     lastid = e.params.data.id
-    console.log(webview)
     loadURL(match(val))//from urlmatch
 });
 search.on("select2:open", function () {
@@ -153,14 +129,16 @@ search.on("select2:open", function () {
 search.on("select2:close", function () {
     $(this).data("open", false);
 });
-
-function loadURL(url) {
-    //console.log(webview)
+/**
+ * Load a URL in webview.
+*/
+var loadURL = function(url) { //Defined as an external function for scoping with webview.
     webview.loadURL(url)
 }
-
-
-failload = function (error) {
+/**
+ * Error handling script.
+ */
+var failload = function (error) {
     console.log(error)
     if (error.errorCode == -105) {
         console.log('loading')
@@ -170,8 +148,10 @@ failload = function (error) {
         webview.loadURL('file://pages/offline.html')
     }
 }
+/**
+ * @param {tab} tabToLoad - The tab we are loading. 
+ */
 var loadTab = function (tabToLoad) {
-    console.log('loadTab called.')
     currentTabID = tabToLoad.id
     $('.awebview').each(function (index, elem) {
         $(elem).css('visibility', 'hidden')
@@ -182,7 +162,6 @@ var loadTab = function (tabToLoad) {
             $(elem).attr("id", "webview");
             return;
         }
-        
     })
     init_page()
     $('.overlay').fadeOut('fast')
@@ -193,10 +172,16 @@ doc.keydown(function (e) {
     if (e.keyCode == 123) {
         webview.openDevTools()
     }
-    
 })
 
 class tab{
+    /**
+     * @param {string} URL - URL associated with tab. Currently not updating correctly, but not necessary
+     * @param {number} width - Width of the image thumbnal
+     * @param {number} height - Height of the image thumbnal
+     * @param {string} imgsrc - Path of the actual image associated with the tab
+     * @param {number} id - ID of the tab. Starting at 0 and incrememnting on creation
+     */
     constructor(URL, width, height, imgsrc, id) {
         this.URL = URL;
         this.width = width;
@@ -206,15 +191,19 @@ class tab{
         console.log('Constructor!')
         this.currwebview = '<webview id="webview" tabID="'+this.id+'" style="visibility:visible" class="awebview" src="'+URL+'"></webview>'
     }
+    /**
+     * Function to convert tab into thumbnail HTML
+     * @returns {string} HTML string representing a thumbnail for tab display
+     */
     getThumbnail() {
         return '<div class="tabContainer"><img class="tabPreview" \
                 src="' + this.imgsrc + '"id="tab'+this.id+'" style ="width:' + this.width + ';height:' + this.height + '"></img></div>'
     }
 }
+
 doc.keyup(function (e) {
     if (e.keyCode == 18 && !overlayup) {
         $('.tabs').empty();
-
         img = webview.capturePage(function (image) {
             let imgsrc = image.toDataURL()
             let imgAR = image.getAspectRatio()
@@ -239,8 +228,6 @@ doc.keyup(function (e) {
                     tabContainer.push(newtab)
                     $('#content').prepend(newtab.currwebview)
                     loadTab(newtab)
-                    
-                    
                 }
                 else {
                     console.log(tabContainer)
@@ -251,17 +238,13 @@ doc.keyup(function (e) {
                         }
                     }
                 }
-                
             })
         })
-
         $('.overlay').fadeIn('fast')
         overlayup = true;
     }
     else if (e.keyCode == 18 && overlayup) {
         $('.overlay').fadeOut('fast')
         overlayup = false;
-
     }
-    
 })
