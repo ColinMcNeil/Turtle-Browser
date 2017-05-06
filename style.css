@@ -4,6 +4,7 @@ html,body{
     margin: 0;
     padding: 0;
 }
+
 .windowbtn{
     color: white;
     float: right;
@@ -46,10 +47,11 @@ html,body{
     height: calc(100% - 20px);
     width: 100%;
 }
-#webview{
+.awebview{
     display:flex; 
     width:100%; 
     height:100%;
+    position: absolute;
 }
 #search{
     display: block;
@@ -63,4 +65,29 @@ html,body{
     color:rgb(230,230,230);
     cursor: pointer;
 }
-
+.tabs{
+    width:100%;
+    display: flex;
+    flex-wrap:wrap;
+}
+.overlay{
+    width:100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    text-align: center;
+    position: absolute;
+    z-index: 9;
+}
+.tabPreview{
+    border: solid white 1px;
+}
+.tabPreview:hover{
+    cursor: pointer;
+}
+.tabcontainer{
+    padding: 5px;
+    height:200px;
+}
+#newTab:hover{
+    color: rgb(220,220,220)
+}
