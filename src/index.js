@@ -300,7 +300,7 @@ doc.keyup(function (e) {
                 console.log('tabPreview clicked')
                 if ($(this).attr('id') == 'newTab') {
                     tabID += 1;
-                    newtab = new tab('file://pages/homepage.html', $(this).width(), $(this).height(), $(this).attr('src'), tabID)
+                    newtab = new tab('pages/homepage.html', $(this).width(), $(this).height(), $(this).attr('src'), tabID)
                     tabContainer.push(newtab)
                     $('#content').prepend(newtab.currwebview)
                     loadTab(newtab)
