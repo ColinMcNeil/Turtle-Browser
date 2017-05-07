@@ -89,15 +89,7 @@ doc.ready(function () {
     $('.overlay').fadeOut(0)
     $('#loadOverlay').remove();
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
-    if (arg) {
-        ext = path.extname(arg)
-        if (ext == '.url') {
-            let url = 'file://' + arg
-            console.log('Loading url '+url)
-            loadURL(url)
-        }
-    }
-    console.log(arg)
+    
     console.time("initpage");
     init_page()
     console.timeEnd("initpage");
@@ -140,7 +132,33 @@ doc.ready(function () {
             contentdown = false;
         }
     });
+    window.setTimeout(checkArgs, 100);
+    
 })
+var checkArgs = function () {
+    if (arg) { //If the program has started with an argument (file to load)
+        if (!fs.existsSync(arg)) { //If file does not exist, it's either a URL we will try to load, or we redirect to DNE page.
+            if (arg.startsWith('http')) {
+                loadURL(arg)
+            }
+            else {
+                loadURL('file:\\\\' + __dirname + '\\pages\\DNE.html')
+            }
+            return;
+        }
+        ext = path.extname(arg)
+        if (ext == '.url') {
+            fs.readFile(arg, 'utf8', function (err, data) {
+                let url = data.split('URL=')[1]
+                loadURL(url)
+            })
+        }
+        else if (ext == '.html') {
+            let url = path.resolve(arg);
+            loadURL(url)
+        }
+    }
+}
 $('#close').on('click', function () {
     ipcRenderer.sendSync('synchronous-message', 'close')
 })
