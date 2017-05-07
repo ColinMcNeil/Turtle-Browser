@@ -8,6 +8,7 @@ const isDev = require('electron-is-dev');
 let win
 
 function createWindow() {
+    global.sharedObj = { args:process.argv }
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false})
     
@@ -76,3 +77,8 @@ ipcMain.on('synchronous-message', (event, arg) => {
     }
     event.returnValue = 'Loading'
 })
+app.on('open-url ', function (event, pathToOpen) {
+    event.preventDefault();
+    win.webContents.openDevTools()
+    console.log(pathToOpen);
+});

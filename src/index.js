@@ -1,4 +1,5 @@
 const { ipcRenderer, remote } = require('electron')
+const isDev = require('electron-is-dev');
 var tabID = 0;
 const { Menu, MenuItem } = remote
 const path = require('path')
@@ -87,6 +88,16 @@ var init_page = function () {
 doc.ready(function () {
     $('.overlay').fadeOut(0)
     $('#loadOverlay').remove();
+    arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
+    if (arg) {
+        ext = path.extname(arg)
+        if (ext == '.url') {
+            let url = 'file://' + arg
+            console.log('Loading url '+url)
+            loadURL(url)
+        }
+    }
+    console.log(arg)
     console.time("initpage");
     init_page()
     console.timeEnd("initpage");
@@ -206,8 +217,13 @@ var loadTab = function (tabToLoad) {
 }
 doc.keydown(function (e) {
     //console.log(e.keyCode)
-    if (e.keyCode == 123) {
+    if (e.keyCode === 123) {
         webview.openDevTools()
+        remote.getCurrentWindow().toggleDevTools();
+    }
+        
+    if (e.keyCode === 116) {
+        webview.reload();
     }
 })
 
