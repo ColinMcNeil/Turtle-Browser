@@ -1,5 +1,7 @@
 //Injected JS to every page. 
 const { ipcRenderer } = require('electron')
+const TurtlePackage = require('../package.json');
+window.TurtleVersion = TurtlePackage.version
 
 //Send Do-Not-Track request to every page
 navigator.doNotTrack = 1;

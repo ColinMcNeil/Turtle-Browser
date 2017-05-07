@@ -26,7 +26,8 @@
         display: inline-block;
         border: solid grey 1px;
         padding: 15px;
-        background-color: rgba(0,0,0,0.1)
+        background-color: rgba(0,0,0,0.1);
+        padding-bottom: 30px;
     }
 
     #title {
@@ -74,9 +75,11 @@
 
 <body>
     <div id="heading">
+        <h5 id="version" style="line-height:1px">Version </h5>
         <h1 id="title">
             About Turtle:
         </h1>
+        
         <hr align="center" width="50%" class="line">
         <h2 id="desc">
             Turtle is based on Electron WebView, which means it has all the features of the modern web.
@@ -94,4 +97,10 @@
         Move your mouse over here!
     </div>
 </body>
+<script src="jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+   $('#version').text(window.TurtleVersion)
+</script>
 </html>
