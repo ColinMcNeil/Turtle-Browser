@@ -3,11 +3,16 @@
 A lightweight & highly optimized browser based on Electron.
 
 **Current features:**
-
- - Search
+ - Extremely low memory usage (<20MB) 
+ - Open Source
+ - Dynamic Search 
  - Forward/Back navigation
  - Full chromium support
  - Auto-Collapse UI components
+ - Tabs
+ - External file handling (opening html files & shortcuts)
+ - Windows Default Browser Support
+ - Injecting JS (WIP, currently used for DoNotTrack)
  
 
 >  **Install & Test for Development:**   	
@@ -17,7 +22,7 @@ A lightweight & highly optimized browser based on Electron.
 >  `npm run test-win`
 >
 >  Or on Mac/Linux
->  `npm run test-UNIX`
+>  `npm run test-unix`
 
 
 ----------
@@ -25,4 +30,4 @@ A lightweight & highly optimized browser based on Electron.
 
 >  **Build for Deployment:**   	
 >
->  `npm run dist`
+>  `npm run dist-win`
