@@ -49,3 +49,10 @@ ipcRenderer.on('scrollTo', function (event,args) {
     console.log(event)
     console.log(args)
 })
+
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode == 27) {
+        document.webkitExitFullscreen();
+    }
+    
+})

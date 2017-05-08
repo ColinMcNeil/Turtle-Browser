@@ -59,11 +59,11 @@ var init_page = function () {
                 }
             })
         }
-        if (currentURL != webview.getURL()) {
+        /*if (currentURL != webview.getURL()) {
             currentURL = webview.getURL()
             loadURL(webview.getURL())
 
-        }
+        }*/
         reloadSearch(webview.getURL(), 'white')
     })
     webview.addEventListener('did-fail-load', failload)
@@ -76,7 +76,8 @@ var init_page = function () {
     webview.addEventListener('ipc-message', function (event) {
         if (event.channel == "navAttempt") {
             clickedURL = event.args[0]
-            if (clickedURL) { loadURL(event.args[0]) }
+            console.log('clicked hyperlink '+clickedURL)
+            if (clickedURL) { loadURL(clickedURL) }
         }
         if (event.channel == "scrollY") {
             currentScroll = event.args[0]
