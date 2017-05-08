@@ -1,8 +1,10 @@
-const { app, BrowserWindow, webContents, ipcMain }  = require('electron')
+const { app, BrowserWindow, webContents, ipcMain, session }  = require('electron')
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
-
+const fs = require('fs')
+const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8').split('\n')
+console.log(domains)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -34,6 +36,26 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null
     })
+    session.defaultSession.webRequest.onBeforeRequest(['*://*./*'], function (details, callback) {
+        let url = details.url;
+        for (let i = 0; i < domains.length; i++) {
+            if (url.includes(domains[i])) {
+                console.log('preventing ' + domains[i] + ' event')
+                callback({ cancel: true })
+                return;
+            }
+        }
+        callback({cancel:false})
+        /*
+        var result = /google/.test(test_url);
+    
+        if (result) {
+            callback({ cancel: true });
+        } else {
+            callback({ cancel: false })
+        }*/
+
+    });
 }
 
 // This method will be called when Electron has finished
@@ -82,3 +104,4 @@ app.on('open-url ', function (event, pathToOpen) {
     win.webContents.openDevTools()
     console.log(pathToOpen);
 });
+

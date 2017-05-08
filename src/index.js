@@ -67,7 +67,9 @@ var init_page = function () {
         reloadSearch(webview.getURL(), 'white')
     })
     webview.addEventListener('did-fail-load', failload)
-    
+    webview.addEventListener('did-get-response-details', function (response) {
+        
+    })
     /**
      * Handles link override:
      * If a user clicks a link, the preload script interrupts it and sends the url here
@@ -243,6 +245,9 @@ doc.keydown(function (e) {
         
     if (e.keyCode === 116) {
         webview.reload();
+    }
+    if (e.keyCode == 27) {
+        webview.sendInputEvent({ type: 'keyDown', keyCode :'Esc'})
     }
 })
 
