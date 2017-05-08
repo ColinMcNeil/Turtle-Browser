@@ -10,7 +10,7 @@ const online = window.navigator.onLine;
 search = $('#search')
 doc = $(document)
 content = $("#content")
-contentdown = false;
+contentdown = true;
 animating = false;
 var tabContainer = []
 var overlayup = false
@@ -40,7 +40,7 @@ doc.on("mousemove", function (event) {
 });
 //Initialize a page - Called on ready and loadTab.
 var init_page = function () {
-    reloadSearch("Search")
+    reloadSearch("Search or Enter URL")
     var webview = document.querySelector('#webview')
     console.log('Webview ' + webview)
     var contextMenu = require('electron-context-menu')({
@@ -100,17 +100,17 @@ doc.ready(function () {
         if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
             console.log(animating)
             console.log('up')
-            newH = $(window).height() - 20
+            newH = $(window).height() - 25
             if (animating) {
                 $('#windowbar').css('top', '0px;');
-                content.css('top', '20px')
+                content.css('top', '25px')
                 content.css('height', newH + 'px')
             }
             else {
                 $('#windowbar').animate({ top: 0 });
                 animating = true;
                 content.animate({
-                    top: '20px',
+                    top: '24px',
                     height: newH
                 }, function () { animating = false })
             }
@@ -120,13 +120,13 @@ doc.ready(function () {
             console.log(animating)
             console.log('down')
             if (animating) {
-                $('#windowbar').css('top', '-20px');
+                $('#windowbar').css('top', '-25px');
                 content.css('top', '0')
                 content.css('height', '100%')
             }
             else {
                 animating = true;
-                $('#windowbar').animate({ top: -20 })
+                $('#windowbar').animate({ top: -25 })
                 content.animate({
                     top: '0',
                     height: "100%"

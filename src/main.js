@@ -4,7 +4,6 @@ const url = require('url')
 const isDev = require('electron-is-dev');
 const fs = require('fs')
 const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8').split('\n')
-console.log(domains)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -40,7 +39,6 @@ function createWindow() {
         let url = details.url;
         for (let i = 0; i < domains.length; i++) {
             if (url.includes(domains[i])) {
-                console.log('preventing ' + domains[i] + ' event')
                 callback({ cancel: true })
                 return;
             }
@@ -99,9 +97,3 @@ ipcMain.on('synchronous-message', (event, arg) => {
     }
     event.returnValue = 'Loading'
 })
-app.on('open-url ', function (event, pathToOpen) {
-    event.preventDefault();
-    win.webContents.openDevTools()
-    console.log(pathToOpen);
-});
-

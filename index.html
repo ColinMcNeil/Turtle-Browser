@@ -11,12 +11,15 @@
 <div id="loadOverlay">
     <h1>Loading.</h1>
 </div>
+<div class="windowbtngroup">
+    <i style="top:0.5px;position:relative" class="fa fa-times windowbtn" id='close' aria-hidden="true"></i>
+    <i style="top:1px;position:relative" class="fa fa-square-o windowbtn" id='max' aria-hidden="true"></i>
+    <i style="top:2px;position:relative" class="fa fa-minus windowbtn" id='min' aria-hidden="true"></i>
+</div>
 
 <!-- Windowbar is used for dragging, closing, minimizing, and maximizing the window. Pops up on scroll up. -->
 <div id='windowbar'>
-    <i class="fa fa-times fa-fw windowbtn" id='close' aria-hidden="true"></i>
-    <i class="fa fa-square-o fa-fw windowbtn" id='max' aria-hidden="true"></i>
-    <i class="fa fa-minus fa-fw windowbtn" id='min' aria-hidden="true"></i>
+    <div class="drag"></div>
 </div>
 
 <!-- Navbar is for searching and nav, pops up from bottom. -->
