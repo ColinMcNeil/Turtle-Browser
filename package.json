@@ -37,10 +37,6 @@
    
     "fileAssociations":[
       {
-        "ext": ".url",
-        "name": "URL"
-      },
-      {
         "ext": ".html",
         "name": "HTML"
       }
