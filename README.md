@@ -25,10 +25,6 @@ A lightweight & highly optimized browser based on Electron.
 >  Or on Mac/Linux
 >  `npm run test-UNIX`
 
-
-----------
-
-
 >  **Build for Deployment:**   	
 >
 >  `npm run dist`

@@ -10,8 +10,6 @@ const online = window.navigator.onLine;
 search = $('#search')
 doc = $(document)
 content = $("#content")
-contentdown = true;
-animating = false;
 var tabContainer = []
 var overlayup = false
 var currentTabID = 0;
@@ -92,51 +90,28 @@ doc.ready(function () {
     $('.overlay').fadeOut(0)
     $('#loadOverlay').remove();
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
-    
     console.time("initpage");
     init_page()
     console.timeEnd("initpage");
     doc.bind('mousewheel', function (e) {
-        if (e.originalEvent.wheelDelta / 120 > 0 && !contentdown) {
-            console.log(animating)
-            console.log('up')
+        if (e.originalEvent.wheelDelta / 120 > 0 && $('#windowbar').css('top')=='-25px') {
             newH = $(window).height() - 25
-            if (animating) {
-                $('#windowbar').css('top', '0px;');
-                content.css('top', '25px')
-                content.css('height', newH + 'px')
-            }
-            else {
-                $('#windowbar').animate({ top: 0 });
-                animating = true;
-                content.animate({
-                    top: '24px',
-                    height: newH
-                }, function () { animating = false })
-            }
-            contentdown = true;
+            $('#windowbar').animate({ top: 0 });
+            content.animate({
+                top: '24px',
+                height: newH
+            })
         }
-        else if (e.originalEvent.wheelDelta / 120 <= 0 && contentdown) {
-            console.log(animating)
-            console.log('down')
-            if (animating) {
-                $('#windowbar').css('top', '-25px');
-                content.css('top', '0')
-                content.css('height', '100%')
-            }
-            else {
-                animating = true;
-                $('#windowbar').animate({ top: -25 })
-                content.animate({
-                    top: '0',
-                    height: "100%"
-                }, function () { animating = false })
-            }
-            contentdown = false;
+        else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#windowbar').css('top') == '0px') {
+            $('#windowbar').animate({ top: -25 });
+            content.animate({
+                top: '0',
+                height: "100%"
+            })
+            
         }
     });
     window.setTimeout(checkArgs, 100);
-    
 })
 var checkArgs = function () {
     if (arg) { //If the program has started with an argument (file to load)
