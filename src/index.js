@@ -40,12 +40,10 @@ doc.on("mousemove", function (event) {
 var init_page = function () {
     reloadSearch("Search or Enter URL")
     var webview = document.querySelector('#webview')
-    console.log('Webview ' + webview)
     var contextMenu = require('electron-context-menu')({
         window: webview,
     });
     const indicator = $('.indicator')
-    console.log(webview.shadowRoot)
     webview.addEventListener('page-title-updated', function () {
         csspath = path.resolve(__dirname, 'scrollbar.css')
         css = fs.readFileSync(csspath, 'utf8')
@@ -57,11 +55,6 @@ var init_page = function () {
                 }
             })
         }
-        /*if (currentURL != webview.getURL()) {
-            currentURL = webview.getURL()
-            loadURL(webview.getURL())
-
-        }*/
         reloadSearch(webview.getURL(), 'white')
     })
     webview.addEventListener('did-fail-load', failload)
