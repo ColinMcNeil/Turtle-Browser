@@ -1,8 +1,17 @@
 **Turtle Browser**
 =====
 A lightweight & highly optimized browser based on Electron.
+
+Collapsing navbar
+-------
 ![](http://g.recordit.co/W7l6Sy1MDo.gif)
+
+Auto-Hide window controls
+-------
 ![](http://g.recordit.co/UQBiuUa0W4.gif)
+
+Full tab support with dynamic rendering thumbnails
+-------
 ![](http://g.recordit.co/v8B8tbPFtm.gif)
 
 **Current features:**
