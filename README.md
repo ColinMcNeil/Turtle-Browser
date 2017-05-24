@@ -1,6 +1,9 @@
 **Turtle Browser**
 =====
 A lightweight & highly optimized browser based on Electron.
+![](http://g.recordit.co/W7l6Sy1MDo.gif)
+![](http://g.recordit.co/UQBiuUa0W4.gif)
+![](http://g.recordit.co/v8B8tbPFtm.gif)
 
 **Current features:**
 
