@@ -16,6 +16,9 @@ function createWindow() {
     autoUpdater.on('error', (error) => {
         win.webContents.send('log', { msg: error.toString() });
     })
+    autoUpdater.on('checking-for-update', () => {
+        win.webContents.send('log', { msg: 'Checking for updates!' });
+    })
     // and load the index.html of the app.
     win.loadURL(url.format({
         pathname: path.resolve(__dirname+'/../index.html'),
