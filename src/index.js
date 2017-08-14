@@ -17,34 +17,34 @@ var currentURL = ''
 var currentScroll = 0;
 var lastScroll = 0;
 
-var reloadSearch = function (placeholder, color = 'white') {
-    search.select2({
-        placeholder: placeholder,
-        tags: true,
-        theme: 'material'
-    });
-    search.siblings('.select2-container').find('.select2-selection__placeholder').css('color', color)
-}
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
     if (event.pageY > $(window).height() - 40 && shown == false) {
         $("#mynavbar").slideDown();
         shown = true;
     }
-    else if (event.pageY <= $(window).height() - 40 && shown == true && !search.data("open")) {
+    else if (event.pageY <= $(window).height() - 40 && shown == true) {
         $("#mynavbar").slideUp();
         shown = false;
     }
 });
 //Initialize a page - Called on ready and loadTab.
 var init_page = function () {
-    reloadSearch("Search or Enter URL")
     var webview = document.querySelector('#webview')
     var contextMenu = require('electron-context-menu')({
         window: webview,
     });
     const indicator = $('.indicator')
     webview.addEventListener('page-title-updated', function () {
+        $(".val").fadeOut('fast', function () {
+            $('#val1').text(webview.getURL())
+            $('#val2').text('')
+            $(".val").fadeIn('fast', function () {
+            });
+        });
+        
+        //$('#val').css('width', '50%')
+
         csspath = path.resolve(__dirname, 'scrollbar.css')
         css = fs.readFileSync(csspath, 'utf8')
         webview.insertCSS(css);
@@ -55,7 +55,6 @@ var init_page = function () {
                 }
             })
         }
-        reloadSearch(webview.getURL(), 'white')
     })
     webview.addEventListener('did-fail-load', failload)
     webview.addEventListener('did-get-response-details', function (response) {
@@ -146,16 +145,91 @@ $('#forward').on('click', function () {
     webview.goForward()
 })
 
-search.on("select2:select", function (e) {
-    val = e.params.data.text;
-    lastid = e.params.data.id
-    loadURL(match(val))//from urlmatch
+$('#search').keypress(function (event) {
+    //input = $('#search').val();
+    //console.log(input)
+    //$('#search').attr("placeholder", "-------"+input);
+    event.preventDefault();
+    if (event.key.length == 1) {
+        $('#val1').text($('#val1').text() + event.key )
+    }
+    else {
+        console.log(event.key)
+    }
 });
-search.on("select2:open", function () {
-    $(this).data("open", true);
+$('#search').keydown(function (event) {
+    console.log(event.key)
+    
+    if (event.key == 'ArrowRight') {
+        console.log(v1.text())
+        console.log(v2.text())
+        v1 = $('#val1')
+        v2 = $('#val2')
+        v1.text(v1.text() + v2.text().charAt(0))
+        v2.text(v2.text().slice(1))
+    }
+    if (event.key == 'ArrowLeft') {
+        v1 = $('#val1')
+        v2 = $('#val2')
+        v2.text(v1.text().charAt(v1.text().length - 1) + v2.text())
+        v1.text(v1.text().slice(0, -1))
+    }
+    if (event.key == 'Backspace') {
+        if (window.getSelection && !window.getSelection().toString() == '') {
+            
+            text = window.getSelection().toString();
+            if (text.substr(-1) == '_') {
+                text = text.substring(0, text.length - 1);
+            }
+            if (text.substr(0,1) == '>') {
+                text = text.substr(1)
+            }
+            
+            console.log(text)
+            //$('#val1').text($('#val').text().replace(text, ''))
+        }
+        else {
+            $('#val1').text($('#val1').text().slice(0, -1))
+        }
+        
+   
+    }
+    if (event.key == 'Enter') {
+        $(".val").fadeOut('fast', function () {
+            $("#val1").text('Loading')
+            $("#val2").text('')
+            $(".val").fadeIn('fast', function () {
+            });
+        });
+        loadURL(match($('#val1').text() + $('#val2').text()))
+    }
+})
+$('#search').attr('tabindex', -1).focus( function () {
+    //console.log('focus')
+    $(this).addClass('searchfocus');
+    if ($(this).text() == '') {
+        $(this).append('<span style="color:white;-webkit-user-select: none;">></span>')
+        $(this).append('<span class="val" id="val1"></span>')
+        $(this).append('<span style="color:white;-webkit-user-select: none;" id="cursor">_</span>')
+        $(this).append('<span class="val" id="val2"></span>')
+        $('.val').on('click', function () {
+            $('.val').select();
+            console.log('select')
+        })
+    }
+    
+    var cursor = $('#cursor')
+    setInterval(function () {
+        if (cursor.css('visibility') == 'hidden') {
+            cursor.css('visibility', 'visible');
+        } else {
+            cursor.css('visibility', 'hidden');
+        }
+    }, 500);
 });
-search.on("select2:close", function () {
-    $(this).data("open", false);
+
+$('#search').focusout(function () {
+    $(this).removeClass('searchfocus');
 });
 /**
  * Load a URL in webview.

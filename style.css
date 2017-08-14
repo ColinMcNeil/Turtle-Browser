@@ -53,7 +53,8 @@ html,body{
     background-color: rgb(80,80,80);
     color:white;
     z-index: 10;
-    display: block;
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
     text-align:center;
 }
@@ -70,13 +71,28 @@ html,body{
     position: absolute;
 }
 #search{
-    display: block;
-    margin: 0 auto;
-    top: 0;
-
+    width: 75%;
+    position: relative;
+    height: 30px;
+    top: 3px;
+    padding-left: 3px;
+    background-color: rgb(70,70,70);
+    color: rgb(230,230,230);
+    text-align: left;
+}
+.searchfocus{
+    border: none;
+    box-shadow: 0 0 5px 1px #969696;
+    color:white; 
+    outline:none;
+}
+#search:hover{
+    cursor: text;
 }
 .navbutton{
+    position: relative;
     padding: 5px;
+    
 }
 .navbutton:hover{
     color:rgb(230,230,230);

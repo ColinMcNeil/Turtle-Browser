@@ -44,14 +44,6 @@ function createWindow() {
             }
         }
         callback({cancel:false})
-        /*
-        var result = /google/.test(test_url);
-    
-        if (result) {
-            callback({ cancel: true });
-        } else {
-            callback({ cancel: false })
-        }*/
 
     });
 }
