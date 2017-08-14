@@ -150,15 +150,17 @@ $('#search').keypress(function (event) {
     //console.log(input)
     //$('#search').attr("placeholder", "-------"+input);
     event.preventDefault();
+    
     if (event.key.length == 1) {
-        $('#val1').text($('#val1').text() + event.key )
+        $('#val1').text($('#val1').text() + event.key)
+        updateSearchText()
     }
     else {
         console.log(event.key)
     }
 });
 $('#search').keydown(function (event) {
-    console.log(event.key)
+    //console.log(event.key)
     
     if (event.key == 'ArrowRight') {
         console.log(v1.text())
@@ -173,6 +175,14 @@ $('#search').keydown(function (event) {
         v2 = $('#val2')
         v2.text(v1.text().charAt(v1.text().length - 1) + v2.text())
         v1.text(v1.text().slice(0, -1))
+    }
+    if (event.key == 'ArrowUp') {
+        $('#searchMatch').css('color', 'green');
+        $('#search').css('color', 'grey');
+    }
+    if (event.key == 'ArrowDown') {
+        $('#searchMatch').css('color', 'rgb(20,255,30)');
+        $('#search').css('color', 'white');
     }
     if (event.key == 'Backspace') {
         if (window.getSelection && !window.getSelection().toString() == '') {
@@ -191,6 +201,7 @@ $('#search').keydown(function (event) {
         else {
             $('#val1').text($('#val1').text().slice(0, -1))
         }
+        updateSearchText()
         
    
     }
@@ -227,7 +238,9 @@ $('#search').attr('tabindex', -1).focus( function () {
         }
     }, 500);
 });
-
+const updateSearchText = function () {
+    $('#searchMatch').text(match($('#val1').text() + $('#val2').text()))
+}
 $('#search').focusout(function () {
     $(this).removeClass('searchfocus');
 });
