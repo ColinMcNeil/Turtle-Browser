@@ -1,5 +1,5 @@
-import { app, BrowserWindow, webContents, ipcMain, session } from ('electron')
-import { autoUpdater } from "electron-updater"
+const { app, BrowserWindow, webContents, ipcMain, session } = require('electron')
+const { autoUpdater } = require("electron-updater")
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
