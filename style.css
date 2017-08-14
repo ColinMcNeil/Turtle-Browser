@@ -79,12 +79,13 @@ html,body{
 }
 #searchMatch{
     pointer-events: none;
-    background-color: rgba(70,70,70,0.3);
-    color: rgb(30,255,30);
+    background-color: rgba(70,70,70,1);
+    color: rgb(0,200,0);
     z-index: 10;
     padding: 0;
     padding-left: 10px;
-    top:-15px;
+    top:-25px;
+    overflow-x: hidden;
 }
 .searchItem{
     width: 75%;

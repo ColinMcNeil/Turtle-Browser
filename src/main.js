@@ -1,4 +1,5 @@
-const { app, BrowserWindow, webContents, ipcMain, session }  = require('electron')
+import { app, BrowserWindow, webContents, ipcMain, session } from ('electron')
+import { autoUpdater } from "electron-updater"
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
@@ -7,7 +8,7 @@ const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
+autoUpdater.on('error',(error)=>{console.log(error)})
 function createWindow() {
     global.sharedObj = { args:process.argv }
     // Create the browser window.

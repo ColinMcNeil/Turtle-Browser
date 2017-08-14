@@ -212,7 +212,9 @@ $('#search').keydown(function (event) {
             $(".val").fadeIn('fast', function () {
             });
         });
-        loadURL(match($('#val1').text() + $('#val2').text()))
+        let query = getSearchQuery()
+        if (query) { loadURL(match(query))}
+        
     }
 })
 $('#search').attr('tabindex', -1).focus( function () {
@@ -244,6 +246,9 @@ const updateSearchText = function () {
 $('#search').focusout(function () {
     $(this).removeClass('searchfocus');
 });
+const getSearchQuery = function () {
+    return $('#val1').text() + $('#val2').text()
+}
 /**
  * Load a URL in webview.
 */
