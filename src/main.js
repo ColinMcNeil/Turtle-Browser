@@ -8,12 +8,14 @@ const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-autoUpdater.on('error',(error)=>{console.log(error)})
+
 function createWindow() {
     global.sharedObj = { args:process.argv }
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false, transparent: true})
-    
+    autoUpdater.on('error', (error) => {
+        win.webContents.send('log', { msg: error.toString() });
+    })
     // and load the index.html of the app.
     win.loadURL(url.format({
         pathname: path.resolve(__dirname+'/../index.html'),

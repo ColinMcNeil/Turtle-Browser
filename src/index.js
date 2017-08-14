@@ -17,6 +17,7 @@ var currentURL = ''
 var currentScroll = 0;
 var lastScroll = 0;
 
+ipcRenderer.on('log', function (event, data) { console.log('MAIN PROCESS: '+data.msg) });
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
     if (event.pageY > $(window).height() - 40 && shown == false) {
