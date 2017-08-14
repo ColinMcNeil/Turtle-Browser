@@ -3,7 +3,6 @@
   "version": "0.2.1",
   "description": "A memory efficient and minimalist browser.",
   "main": "src\\main.js",
-  
   "scripts": {
     "test-win": "node node_modules\\uglify-js\\bin\\uglifyjs src\\index.js src\\urlMatch.js -o src-min\\out.js && node_modules\\electron\\dist\\electron.exe .",
     "test-unix": "./node_modules/.bin/electron .",
@@ -16,6 +15,7 @@
     "electron-context-menu": "^0.9.0",
     "electron-is-dev": "^0.1.2",
     "electron-tabs": "^0.6.0",
+    "electron-updater": "^2.8.7",
     "jquery": "^3.2.1",
     "tldjs": "^1.7.0"
   },
@@ -25,17 +25,23 @@
   },
   "build": {
     "appId": "mcneil.browser",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "colinmcneil",
+        "repo": "Turtle-Browser"
+      }
+    ],
     "mac": {
       "category": "mcneil.browser.app"
     },
     "files": [
       "!src${/*}."
     ],
-    "nsis":{
+    "nsis": {
       "perMachine": true
     },
-   
-    "fileAssociations":[
+    "fileAssociations": [
       {
         "ext": ".html",
         "name": "HTML"
@@ -45,7 +51,8 @@
       {
         "name": "httpURL",
         "schemes": [
-          "http","https"
+          "http",
+          "https"
         ]
       }
     ]
