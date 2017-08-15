@@ -1,0 +1,46 @@
+<head>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="select2/select2.min.css">
+    <link rel="stylesheet" href="select2/materialSelect.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<div id="loadOverlay">
+    <h1>Loading.</h1>
+</div>
+<div class="windowbtngroup">
+    <i style="top:0.5px;position:relative" class="fa fa-times windowbtn" id='close' aria-hidden="true"></i>
+    <i style="top:1px;position:relative" class="fa fa-square-o windowbtn" id='max' aria-hidden="true"></i>
+    <i style="top:2px;position:relative" class="fa fa-minus windowbtn" id='min' aria-hidden="true"></i>
+</div>
+
+<!-- Windowbar is used for dragging, closing, minimizing, and maximizing the window. Pops up on scroll up. -->
+<div id='windowbar'>
+    <div class="drag"></div>
+</div>
+
+<!-- Navbar is for searching and nav, pops up from bottom. -->
+<div id='mynavbar'>
+    <i class="fa fa-chevron-left fa-2x navbutton" id="back" aria-hidden="true"></i>
+    <div id= "search" class="searchitem"></div>
+    <div id="searchMatch" class="searchitem">Search</div>
+    <i class="fa fa-chevron-right fa-2x navbutton" id="forward" aria-hidden="true"></i>
+</div>
+
+<!-- Content div contains the webview and overlay for tabs -->
+<div id="content">
+    <div class="overlay">
+        <h1>Turtle Overlay</h1>
+        <div class="tabs"></div>
+    </div>
+    <webview id="webview" class="awebview" tabID="0" src="pages/homepage.html" preload="src/preload.js"></webview>
+</div>
+
+<!-- Script imports (jquery loaded in head) -->
+<script src='select2/select2.min.js'></script>
+<script src='bootstrap/js/bootstrap.min.js'></script>
+<script src='src-min/out.js'></script>
+<!--script src='src/urlMatch.js'></script-->
