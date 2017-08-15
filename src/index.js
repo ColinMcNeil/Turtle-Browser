@@ -87,7 +87,7 @@ doc.ready(function () {
         var updateStatus = ipcRenderer.sendSync('synchronous-message', 'updateStatus')
         console.log(updateStatus)
         if (updateStatus.code == -1) { $('#loadOverlay').remove(); clearInterval(updatePoll) }
-        $('#loadOverlay').text(updateStatus.status)
+        $('#loadText').text(updateStatus.status)
     }
     
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]

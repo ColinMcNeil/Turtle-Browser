@@ -1,6 +1,6 @@
 {
   "name": "Turtle-Browser",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A memory efficient and minimalist browser.",
   "main": "src\\main.js",
   "scripts": {
