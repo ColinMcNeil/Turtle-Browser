@@ -105,12 +105,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
     event.returnValue = 'Loading'
 })
 autoUpdater.on('update-downloaded', (info) => {
-    // Wait 5 seconds, then quit and install
-    // In your application, you don't need to wait 5 seconds.
-    // You could call autoUpdater.quitAndInstall(); immediately
-    setTimeout(function () {
-        autoUpdater.quitAndInstall();
-    }, 5000)
+    autoUpdater.quitAndInstall();
 })
 
 autoUpdater.on('checking-for-update', (info) => {
@@ -123,7 +118,7 @@ autoUpdater.on('update-not-available', (info) => {
     updateStatus = { code: -1, status: "Found update. Installing" }
 })
 autoUpdater.on('download-progress', (info) => {
-    updateStatus = { code: 2, status: "Update " + info.percent+"% complete." }
+    updateStatus = { code: 2, status: "Update " + Math.ceil(info.percent)+"% complete." }
 })
 autoUpdater.on('error', (info) => {
     updateStatus = { code: -1, status: "Failed to check." }
