@@ -1,5 +1,5 @@
 const { app, BrowserWindow, webContents, ipcMain, session } = require('electron')
-const { autoUpdater } = require("electron-updater")
+const autoUpdater  = require("electron-updater").autoUpdater
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
@@ -10,13 +10,16 @@ const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8'
 let win
 
 function createWindow() {
+    autoUpdater.checkForUpdates();
     global.sharedObj = { args:process.argv }
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false, transparent: true})
     autoUpdater.on('error', (error) => {
+        console.log(error)
         win.webContents.send('log', { msg: error.toString() });
     })
     autoUpdater.on('checking-for-update', () => {
+        console.log('Checking')
         win.webContents.send('log', { msg: 'Checking for updates!' });
     })
     // and load the index.html of the app.
@@ -25,6 +28,7 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }))
+    
 
     // Open the DevTools.
     
@@ -32,6 +36,8 @@ function createWindow() {
     if (isDev) {
         win.webContents.openDevTools()
     }
+
+    
     
 
     // Emitted when the window is closed.
@@ -93,5 +99,16 @@ ipcMain.on('synchronous-message', (event, arg) => {
             win.maximize();
         }
     }
+    if (arg == 'debug') {
+        autoUpdater.checkForUpdates().then((result) => { event.returnValue(result.toString())})
+    }
     event.returnValue = 'Loading'
+})
+autoUpdater.on('update-downloaded', (info) => {
+    // Wait 5 seconds, then quit and install
+    // In your application, you don't need to wait 5 seconds.
+    // You could call autoUpdater.quitAndInstall(); immediately
+    setTimeout(function () {
+        autoUpdater.quitAndInstall();
+    }, 5000)
 })
