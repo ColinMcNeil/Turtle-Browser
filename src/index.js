@@ -36,12 +36,7 @@ var init_page = function () {
     });
     const indicator = $('.indicator')
     webview.addEventListener('page-title-updated', function () {
-        $(".val").fadeOut('fast', function () {
-            $('#val1').text(webview.getURL())
-            $('#val2').text('')
-            $(".val").fadeIn('fast', function () {
-            });
-        });
+        $('#search').val(webview.getURL())
         
         //$('#val').css('width', '50%')
 
@@ -164,109 +159,24 @@ $('#forward').on('click', function () {
     webview.goForward()
 })
 
-$('#search').keypress(function (event) {
-    //input = $('#search').val();
-    //console.log(input)
-    //$('#search').attr("placeholder", "-------"+input);
-    event.preventDefault();
-    
-    if (event.key.length == 1) {
-        $('#val1').text($('#val1').text() + event.key)
-        updateSearchText()
-    }
-    else {
-        console.log(event.key)
-    }
-});
-$('#search').keydown(function (event) {
-    //console.log(event.key)
-    
-    if (event.key == 'ArrowRight') {
-        console.log(v1.text())
-        console.log(v2.text())
-        v1 = $('#val1')
-        v2 = $('#val2')
-        v1.text(v1.text() + v2.text().charAt(0))
-        v2.text(v2.text().slice(1))
-    }
-    if (event.key == 'ArrowLeft') {
-        v1 = $('#val1')
-        v2 = $('#val2')
-        v2.text(v1.text().charAt(v1.text().length - 1) + v2.text())
-        v1.text(v1.text().slice(0, -1))
-    }
-    if (event.key == 'ArrowUp') {
-        $('#searchMatch').css('color', 'green');
-        $('#search').css('color', 'grey');
-    }
-    if (event.key == 'ArrowDown') {
-        $('#searchMatch').css('color', 'rgb(20,255,30)');
-        $('#search').css('color', 'white');
-    }
-    if (event.key == 'Backspace') {
-        if (window.getSelection && !window.getSelection().toString() == '') {
-            
-            text = window.getSelection().toString();
-            if (text.substr(-1) == '_') {
-                text = text.substring(0, text.length - 1);
-            }
-            if (text.substr(0,1) == '>') {
-                text = text.substr(1)
-            }
-            
-            console.log(text)
-            //$('#val1').text($('#val').text().replace(text, ''))
-        }
-        else {
-            $('#val1').text($('#val1').text().slice(0, -1))
-        }
-        updateSearchText()
-        
-   
-    }
+$('#search').keyup(function (event) {
+    updateSearchText()
     if (event.key == 'Enter') {
-        $(".val").fadeOut('fast', function () {
-            $("#val1").text('Loading')
-            $("#val2").text('')
-            $(".val").fadeIn('fast', function () {
-            });
-        });
         let query = getSearchQuery()
+        $('#search').val('Loading!')
         if (query) { loadURL(match(query))}
-        
     }
 })
-$('#search').attr('tabindex', -1).focus( function () {
-    //console.log('focus')
-    $(this).addClass('searchfocus');
-    if ($(this).text() == '') {
-        $(this).append('<span style="color:white;-webkit-user-select: none;">></span>')
-        $(this).append('<span class="val" id="val1"></span>')
-        $(this).append('<span style="color:white;-webkit-user-select: none;" id="cursor">_</span>')
-        $(this).append('<span class="val" id="val2"></span>')
-        $('.val').on('click', function () {
-            $('.val').select();
-            console.log('select')
-        })
-    }
-    
-    var cursor = $('#cursor')
-    setInterval(function () {
-        if (cursor.css('visibility') == 'hidden') {
-            cursor.css('visibility', 'visible');
-        } else {
-            cursor.css('visibility', 'hidden');
-        }
-    }, 500);
-});
 const updateSearchText = function () {
-    $('#searchMatch').text(match($('#val1').text() + $('#val2').text()))
+    //$('#searchMatch').text(match($('#val1').text() + $('#val2').text()))
+    $('#searchMatch').text(match(getSearchQuery()))
 }
 $('#search').focusout(function () {
     $(this).removeClass('searchfocus');
 });
 const getSearchQuery = function () {
-    return $('#val1').text() + $('#val2').text()
+    return $('#search').val()
+    //return $('#val1').text() + $('#val2').text()
 }
 /**
  * Load a URL in webview.
