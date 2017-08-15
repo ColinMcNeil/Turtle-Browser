@@ -1,5 +1,7 @@
+
 const { app, BrowserWindow, webContents, ipcMain, session } = require('electron')
-const autoUpdater  = require("electron-updater").autoUpdater
+const { autoUpdater } = require("electron-updater")
+autoUpdater.logger = require('electron-log')
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
@@ -8,20 +10,14 @@ const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
+//autoUpdater.logger.trasports.file.level='info'
+autoUpdater.logger.transports.file.level = 'info'
+autoUpdater.logger.info('Hey')
 function createWindow() {
     autoUpdater.checkForUpdates();
     global.sharedObj = { args:process.argv }
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false, transparent: true})
-    autoUpdater.on('error', (error) => {
-        console.log(error)
-        win.webContents.send('log', { msg: error.toString() });
-    })
-    autoUpdater.on('checking-for-update', () => {
-        console.log('Checking')
-        win.webContents.send('log', { msg: 'Checking for updates!' });
-    })
     // and load the index.html of the app.
     win.loadURL(url.format({
         pathname: path.resolve(__dirname+'/../index.html'),
@@ -81,6 +77,7 @@ app.on('activate', () => {
         createWindow()
     }
 })
+var updateStatus = { code: 0, status: "Loading." }
 ipcMain.on('synchronous-message', (event, arg) => {
     //win.loadURL('https://google.com/');
     console.log('revieved event '+arg)
@@ -99,6 +96,9 @@ ipcMain.on('synchronous-message', (event, arg) => {
             win.maximize();
         }
     }
+    if (arg == 'updateStatus') {
+        event.returnValue= updateStatus
+    }
     if (arg == 'debug') {
         autoUpdater.checkForUpdates().then((result) => { event.returnValue(result.toString())})
     }
@@ -111,4 +111,20 @@ autoUpdater.on('update-downloaded', (info) => {
     setTimeout(function () {
         autoUpdater.quitAndInstall();
     }, 5000)
+})
+
+autoUpdater.on('checking-for-update', (info) => {
+    updateStatus = { code: 0, status: "Loading." }
+})
+autoUpdater.on('update-available', (info) => {
+    updateStatus = { code: 1, status: "Found update. Installing" }
+})
+autoUpdater.on('update-not-available', (info) => {
+    updateStatus = { code: -1, status: "Found update. Installing" }
+})
+autoUpdater.on('download-progress', (info) => {
+    updateStatus = { code: 2, status: "Update " + info.percent+"% complete." }
+})
+autoUpdater.on('error', (info) => {
+    updateStatus = { code: -1, status: "Failed to check." }
 })

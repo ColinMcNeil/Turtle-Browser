@@ -17,10 +17,6 @@ var currentURL = ''
 var currentScroll = 0;
 var lastScroll = 0;
 
-
-const check = function () {
-    console.log( ipcRenderer.sendSync('synchronous-message', 'debug'))
-}
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
     if (event.pageY > $(window).height() - 40 && shown == false) {
@@ -84,7 +80,16 @@ var init_page = function () {
 
 doc.ready(function () {
     $('.overlay').fadeOut(0)
-    $('#loadOverlay').remove();
+    
+    
+    var updatePoll = setInterval(checkUpdateStatus,500)
+    function checkUpdateStatus() {
+        var updateStatus = ipcRenderer.sendSync('synchronous-message', 'updateStatus')
+        console.log(updateStatus)
+        if (updateStatus.code == -1) { $('#loadOverlay').remove(); clearInterval(updatePoll) }
+        $('#loadOverlay').text(updateStatus.status)
+    }
+    
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
     console.time("initpage");
     init_page()
