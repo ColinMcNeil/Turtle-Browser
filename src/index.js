@@ -94,6 +94,16 @@ doc.ready(function () {
     console.time("initpage");
     init_page()
     console.timeEnd("initpage");
+    lastHeight = $(window).height()
+    $(window).resize(function () {
+        if($(this).height()==lastHeight){return}
+        console.log('resize')
+        $('#windowbar').css('top', '-25px');
+        content.css('top', '0')
+        content.css('height', '100%')
+        lastHeight=$(window).height()
+        
+    });
     doc.bind('mousewheel', function (e) {
         if (e.originalEvent.wheelDelta / 120 > 0 && $('#windowbar').css('top')=='-25px') {
             newH = $(window).height() - 25
