@@ -75,6 +75,7 @@ html,body{
     color: rgb(230,230,230);
     z-index: 5;
     overflow-x: scroll;
+    position: relative;
    
 }
 #searchMatch{
