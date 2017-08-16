@@ -19,11 +19,11 @@ var lastScroll = 0;
 
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
-    if (event.pageY > $(window).height() - 40 && shown == false) {
+    if (event.pageY > $(window).height() - 40 && shown == false  ) {
         $("#mynavbar").slideDown();
         shown = true;
     }
-    else if (event.pageY <= $(window).height() - 40 && shown == true) {
+    else if (event.pageY <= $(window).height() - 40 && shown == true&&!$('#search').hasClass('searchfocus') ) {
         $("#mynavbar").slideUp();
         shown = false;
     }
@@ -75,8 +75,6 @@ var init_page = function () {
 
 doc.ready(function () {
     $('.overlay').fadeOut(0)
-    
-    
     var updatePoll = setInterval(checkUpdateStatus,500)
     function checkUpdateStatus() {
         var updateStatus = ipcRenderer.sendSync('synchronous-message', 'updateStatus')
@@ -84,7 +82,6 @@ doc.ready(function () {
         if (updateStatus.code == -1) { $('#loadOverlay').remove(); clearInterval(updatePoll) }
         $('#loadText').text(updateStatus.status)
     }
-    
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
     console.time("initpage");
     init_page()
@@ -114,7 +111,6 @@ doc.ready(function () {
                 top: '0',
                 height: "100%"
             })
-            
         }
     });
     window.setTimeout(checkArgs, 100);
@@ -171,10 +167,16 @@ const updateSearchText = function () {
     //$('#searchMatch').text(match($('#val1').text() + $('#val2').text()))
     $('#searchMatch').text(match(getSearchQuery()))
 }
+$('#search').focus(function () {
+    console.log('focus')
+    $(this).addClass('searchfocus');
+});
 $('#search').focusout(function () {
+    console.log('focusout')
     $(this).removeClass('searchfocus');
 });
 const getSearchQuery = function () {
+
     return $('#search').val()
     //return $('#val1').text() + $('#val2').text()
 }
@@ -183,9 +185,10 @@ const getSearchQuery = function () {
 */
 var loadURL = function (url,scoll=0) { //Defined as an external function for scoping with webview.
     lastScroll = currentScroll;
+    $('#search').focusout()
     console.log('Loading url '+url)
     webview.loadURL(url, {
-        extraHeaders:"DNT:1"
+        extraHeaders:"DNT:1\n"
     })
     webview.send('scrollTo',scroll)
 }
