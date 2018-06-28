@@ -1,7 +1,5 @@
 
 const { app, BrowserWindow, webContents, ipcMain, session } = require('electron')
-const { autoUpdater } = require("electron-updater")
-autoUpdater.logger = require('electron-log')
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
@@ -10,11 +8,7 @@ const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-//autoUpdater.logger.trasports.file.level='info'
-autoUpdater.logger.transports.file.level = 'info'
-autoUpdater.logger.info('Hey')
 function createWindow() {
-    autoUpdater.checkForUpdates();
     global.sharedObj = { args:process.argv }
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600, frame: false, transparent: true})
@@ -100,26 +94,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
         event.returnValue= updateStatus
     }
     if (arg == 'debug') {
-        autoUpdater.checkForUpdates().then((result) => { event.returnValue(result.toString())})
+        
     }
     event.returnValue = 'Loading'
-})
-autoUpdater.on('update-downloaded', (info) => {
-    autoUpdater.quitAndInstall();
-})
-
-autoUpdater.on('checking-for-update', (info) => {
-    updateStatus = { code: 0, status: "Loading." }
-})
-autoUpdater.on('update-available', (info) => {
-    updateStatus = { code: 1, status: "Found update. Installing" }
-})
-autoUpdater.on('update-not-available', (info) => {
-    updateStatus = { code: -1, status: "Found update. Installing" }
-})
-autoUpdater.on('download-progress', (info) => {
-    updateStatus = { code: 2, status: "Update " + Math.ceil(info.percent)+"% complete." }
-})
-autoUpdater.on('error', (info) => {
-    updateStatus = { code: -1, status: "Failed to check." }
 })
