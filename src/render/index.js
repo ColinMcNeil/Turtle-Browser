@@ -67,7 +67,7 @@ doc.ready(function () {
     $('.overlay').fadeOut(0)
     var updatePoll = setInterval(checkUpdateStatus,500)
     function checkUpdateStatus() {
-        var updateStatus = ipcRenderer.sendSync('synchronous-message', 'updateStatus')
+        var updateStatus = -1;
         console.log(updateStatus)
         if (updateStatus.code == -1) { $('#loadOverlay').remove(); clearInterval(updatePoll) }
         $('#loadText').text(updateStatus.status)
