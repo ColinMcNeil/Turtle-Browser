@@ -8,7 +8,7 @@
     "test-unix": "./node_modules/.bin/electron .",
     "pack": "build --dir",
     "dist-win": "npm run uglify && build",
-    "uglify":"node node_modules\\uglify-js\\bin\\uglifyjs src\\render\\index.js src\\render\\urlMatch.js src\\render\\control.js src\\render\\search.js src\\render\\tab.js -o src-min\\out.js"
+    "uglify": "uglifyjs src\\render\\index.js src\\render\\urlMatch.js src\\render\\control.js src\\render\\search.js src\\render\\tab.js -o src-min\\out.js"
   },
   "author": "Colin McNeil",
   "license": "ISC",
@@ -19,11 +19,11 @@
     "electron-tabs": "^0.6.0",
     "electron-updater": "^2.8.7",
     "jquery": "^3.2.1",
-    "tldjs": "^1.7.0"
+    "tldjs": "^1.7.0",
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {
-    "electron": "^1.6.6",
-    "uglify-js": "github:mishoo/UglifyJS2#harmony"
+    "electron": "^1.6.6"
   },
   "build": {
     "appId": "mcneil.browser",
