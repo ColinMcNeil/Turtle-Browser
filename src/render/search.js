@@ -6,20 +6,19 @@ $('#search').keyup(function (event) {
         if (query) { loadURL(match(query)) }
     }
 })
+
 const updateSearchText = function () {
-    //$('#searchMatch').text(match($('#val1').text() + $('#val2').text()))
     $('#searchMatch').text(match(getSearchQuery()))
 }
+
 $('#search').focus(function () {
-    console.log('focus')
     $(this).addClass('searchfocus');
 });
+
 $('#search').focusout(function () {
-    console.log('focusout')
     $(this).removeClass('searchfocus');
 });
-const getSearchQuery = function () {
 
+const getSearchQuery = function () {
     return $('#search').val()
-    //return $('#val1').text() + $('#val2').text()
 }

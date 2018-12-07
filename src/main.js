@@ -18,17 +18,10 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }))
-    
-
-    // Open the DevTools.
-    
 
     if (isDev) {
         win.webContents.openDevTools()
     }
-
-    
-    
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -37,6 +30,7 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null
     })
+
     session.defaultSession.webRequest.onBeforeRequest(['*://*./*'], function (details, callback) {
         let url = details.url;
         for (let i = 0; i < domains.length; i++) {
@@ -71,15 +65,12 @@ app.on('activate', () => {
         createWindow()
     }
 })
-var updateStatus = { code: 0, status: "Loading." }
+
 ipcMain.on('synchronous-message', (event, arg) => {
-    //win.loadURL('https://google.com/');
-    console.log('revieved event '+arg)
     if (arg == 'close') {
         app.quit()
     }
     if (arg == 'min') {
-        
         win.minimize();
     }
     if (arg == 'max') {
@@ -90,11 +81,4 @@ ipcMain.on('synchronous-message', (event, arg) => {
             win.maximize();
         }
     }
-    if (arg == 'updateStatus') {
-        event.returnValue= updateStatus
-    }
-    if (arg == 'debug') {
-        
-    }
-    event.returnValue = 'Loading'
 })

@@ -2,13 +2,12 @@
   "name": "Turtle-Browser",
   "version": "0.3.7",
   "description": "A memory efficient and minimalist browser.",
-  "main": "src\\main.js",
+  "main": "src/main.js",
   "scripts": {
-    "test-win": "npm run uglify && node_modules\\electron\\dist\\electron.exe .",
-    "test-unix": "./node_modules/.bin/electron .",
+    "dev": "npm run uglify && electron .",
     "pack": "build --dir",
     "dist-win": "npm run uglify && build",
-    "uglify": "uglifyjs src\\render\\index.js src\\render\\urlMatch.js src\\render\\control.js src\\render\\search.js src\\render\\tab.js -o src-min\\out.js"
+    "uglify": "uglifyjs src/render/index.js src/render/urlMatch.js src/render/control.js src/render/search.js src/render/tab.js -o src-min/out.js"
   },
   "author": "Colin McNeil",
   "license": "ISC",

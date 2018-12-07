@@ -53,7 +53,6 @@ var init_page = function () {
     webview.addEventListener('ipc-message', function (event) {
         if (event.channel == "navAttempt") {
             clickedURL = event.args[0]
-            console.log('clicked hyperlink '+clickedURL)
             if (clickedURL) { loadURL(clickedURL) }
         }
         if (event.channel == "scrollY") {
@@ -65,26 +64,15 @@ var init_page = function () {
 
 doc.ready(function () {
     $('.overlay').fadeOut(0)
-    var updatePoll = setInterval(checkUpdateStatus,500)
-    function checkUpdateStatus() {
-        var updateStatus = -1;
-        console.log(updateStatus)
-        if (updateStatus.code == -1) { $('#loadOverlay').remove(); clearInterval(updatePoll) }
-        $('#loadText').text(updateStatus.status)
-    }
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
-    console.time("initpage");
     init_page()
-    console.timeEnd("initpage");
     lastHeight = $(window).height()
     $(window).resize(function () {
         if($(this).height()==lastHeight){return}
-        console.log('resize')
         $('#windowbar').css('top', '-25px');
         content.css('top', '0')
         content.css('height', '100%')
         lastHeight=$(window).height()
-        
     });
     doc.bind('mousewheel', function (e) {
         if (e.originalEvent.wheelDelta / 120 > 0 && $('#windowbar').css('top')=='-25px') {

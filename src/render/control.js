@@ -24,10 +24,11 @@ $('#back').on('click', function () {
 $('#forward').on('click', function () {
     webview.goForward()
 })
+
+$('#dev').on('click', ()=>webview.openDevTools())
+
 doc.keydown(function (e) {
-    //console.log(e.keyCode)
     if (e.keyCode === 123) {
-        webview.openDevTools()
         remote.getCurrentWindow().toggleDevTools();
     }
 

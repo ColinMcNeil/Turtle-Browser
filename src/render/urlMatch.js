@@ -16,7 +16,6 @@ const match = function (query) {
         return 'http://google.com/search?q=' + encodeURI(query);
     }
     domain = splitquery[splitquery.length - 2] + '.' + splitquery[splitquery.length - 1]
-    //console.log('verifying ' + domain)
     
     if (tld.isValid(domain)) {
         return 'http://'+query

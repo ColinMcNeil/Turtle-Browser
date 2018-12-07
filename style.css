@@ -3,6 +3,7 @@ html,body{
     height: 100%;
     margin: 0;
     padding: 0;
+    transition: ease 0.2s all;
 }
 .windowbtngroup{
     z-index: 12;
@@ -10,16 +11,18 @@ html,body{
     width: 100%;
     height: 25px;
     background-color: rgba(0,0,0,0);
+    display: flex;
+    justify-content: flex-end;
 }
 .windowbtn{
     -webkit-app-region: no-drag;
     color: white;
-    padding-top: 2px;
-    padding-right: 10px;
+    padding-top: 5px;
+    padding-right: 1em;
     text-align: center;
     background-color: rgba(0,0,0,0);
-    float: right;
     z-index: 11;
+    transition: ease 0.2s all;
 }
 .windowbtn:hover{
     color: grey;
@@ -34,14 +37,11 @@ html,body{
 #windowbar{
     background-color: rgb(80,80,80);
     position: absolute;
-    /*background: linear-gradient(to bottom, rgba(102,102,102,1) 0%,rgba(81,81,81,1) 100%);*/
     width: 100%;
     height: 25px;
-    /*box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.75);*/
     z-index: 10;
     text-align: center;
     vertical-align: bottom;
-    
     padding: 5px;
 }
 #mynavbar{

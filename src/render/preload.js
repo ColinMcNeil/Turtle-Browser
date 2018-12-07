@@ -1,6 +1,6 @@
 //Injected JS to every page. 
 const { ipcRenderer } = require('electron')
-const TurtlePackage = require('../package.json');
+const TurtlePackage = require('../../package.json');
 window.TurtleVersion = TurtlePackage.version
 
 //Send Do-Not-Track request to every page
@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     }, true);
 });
-// Reference: http://www.html5rocks.com/en/tutorials/speed/animations/
 
 var last_known_scroll_position = 0;
 var ticking = false;
