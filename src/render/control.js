@@ -1,10 +1,12 @@
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
+    console.log(shown)
     if (event.pageY > $(window).height() - 40 && shown == false) {
         $("#mynavbar").slideDown();
         shown = true;
     }
     else if (event.pageY <= $(window).height() - 40 && shown == true && !$('#search').hasClass('searchfocus')) {
+        console.log('slideup')
         $("#mynavbar").slideUp();
         shown = false;
     }
