@@ -79,18 +79,12 @@ doc.ready(function () {
         if (e.originalEvent.wheelDelta / 120 > 0 && $('#top').css('top')=='-25px') {
             $('#top').animate({ top: 0 });
             $('#bookmarks').animate({ top: 25 });
-            content.animate({
-                top: '50px',
-                height: tall
-            })
+            resizeContent('tall');
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#top').css('top') == '0px') {
             $('#top').animate({ top: -25 });
             $('#bookmarks').animate({ top: 0 });
-            content.animate({
-                top: '25px',
-                height: short
-            })
+            resizeContent('short');
         }
     });
     window.setTimeout(checkArgs, 100);
@@ -141,6 +135,16 @@ var failload = function (error) {
     }
     if (!online) {
         webview.loadURL('file://pages/offline.html')
+    }
+}
+
+
+var resizeContent = function (height) {
+    const tall = $(window).outerHeight() - 50
+    const short = $(window).outerHeight() - 25
+    switch (height) {
+        case 'tall': { content.animate({ top: '50px', height: tall }); break }
+        case 'short': { content.animate({ top: '25px', height: short }); break }
     }
 }
 

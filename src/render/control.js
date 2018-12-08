@@ -16,10 +16,14 @@ $('#min').on('click', function () {
     remote.getCurrentWindow().minimize();
 })
 $('#max').on('click', function () {
-    console.log(remote.getCurrentWindow().isMaximized())
+    console.log(window.height);
     switch (remote.getCurrentWindow().isMaximized()) {
         case true: { remote.getCurrentWindow().unmaximize(); break; };
         case false: { remote.getCurrentWindow().maximize(); break; };
+    }
+    switch ($('#top').css('top')=='-25px') {
+        case true: { setTimeout( () => { resizeContent('short') }, 200 ) }
+        case false: { setTimeout( () => { resizeContent('tall') }, 200 ) }
     }
 })
 $('#back').on('click', function () {
