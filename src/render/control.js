@@ -1,11 +1,11 @@
 //Navbar scroll detection
 doc.on("mousemove", function (event) {
     if (event.pageY > $(window).height() - 40 && shown == false) {
-        $("#mynavbar").slideDown();
+        $("#mynavbar").slideDown(ANIMATION_SPEED);
         shown = true;
     }
     else if (event.pageY <= $(window).height() - 40 && shown == true && !$('#search').hasClass('searchfocus')) {
-        $("#mynavbar").slideUp();
+        $("#mynavbar").slideUp(ANIMATION_SPEED);
         shown = false;
     }
 });
@@ -22,8 +22,8 @@ $('#max').on('click', function () {
         case false: { remote.getCurrentWindow().maximize(); break; };
     }
     switch ($('#top').css('top')=='-25px') {
-        case true: { setTimeout( () => { resizeContent('short') }, 200 ) }
-        case false: { setTimeout( () => { resizeContent('tall') }, 200 ) }
+        case true: { setTimeout( resizeContent, 100 ) }
+        case false: { setTimeout( resizeContent, 100 ) }
     }
 })
 $('#back').on('click', function () {
@@ -35,14 +35,14 @@ $('#forward').on('click', function () {
 const delim = 'del '
 
 $('#bkmks').on('click', function () {
-    $('#bookmarkPopup').css("display", "flex").hide().fadeIn();
+    $('#bookmarkPopup').css("display", "flex").hide().fadeIn(ANIMATION_SPEED);
     $('.bookmark').each((index, element) => {
         const text = $(element).text()
         $(element).append(`<i style="position:relative" class="fa fa-times bookmarkX" aria-hidden="true"></i>`)
     })
 })
 $('#closePopup').on('click', function () {
-    $('#bookmarkPopup').fadeOut()
+    $('#bookmarkPopup').fadeOut(ANIMATION_SPEED)
     $('.bookmarkX').remove()
 })
 
@@ -80,11 +80,11 @@ doc.keyup(function (e) {
     if (document.readyState !== 'complete') { return }
     if (e.keyCode == 18 && !overlayup) {
         initializeTabs()
-        $('.overlay').fadeIn('fast')
+        $('.overlay').fadeIn(ANIMATION_SPEED)
         overlayup = true;
     }
     else if (e.keyCode == 18 && overlayup) {
-        $('.overlay').fadeOut('fast')
+        $('.overlay').fadeOut(ANIMATION_SPEED)
         overlayup = false;
     }
 })

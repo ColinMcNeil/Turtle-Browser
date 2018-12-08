@@ -18,7 +18,7 @@ var loadTab = function (tabToLoad) {
         }
     })
     init_page()
-    $('.overlay').fadeOut('fast')
+    $('.overlay').fadeOut(ANIMATION_SPEED)
     overlayup = false;
 }
 class tab {
@@ -116,7 +116,7 @@ const initializeTabs = function () {
         })
         $('.closeTab').on('click', function () {
             let myID = $(this).attr('id').split('closeTab')[1]
-            $('#tab' + myID).fadeOut('fast', function () {
+            $('#tab' + myID).fadeOut(ANIMATION_SPEED, function () {
                 for (let i = 0; i < tabContainer.length; i++) {
                     let peekTab = tabContainer[i]
                     if (peekTab.id == myID) {

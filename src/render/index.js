@@ -2,6 +2,7 @@ const { ipcRenderer, remote } = require('electron')
 const isDev = require('electron-is-dev');
 var tabID = 0;
 const { Menu, MenuItem } = remote
+const ANIMATION_SPEED = 200
 const path = require('path')
 fs = require('fs')
 var lastid;
@@ -77,14 +78,14 @@ doc.ready(function () {
         let tall = $(window).height() - 50
         let short = $(window).height() - 25
         if (e.originalEvent.wheelDelta / 120 > 0 && $('#top').css('top')=='-25px') {
-            $('#top').animate({ top: 0 });
-            $('#bookmarks').animate({ top: 25 });
-            resizeContent('tall');
+            $('#top').animate({ top: 0 }, ANIMATION_SPEED);
+            $('#bookmarks').animate({ top: 25 }, ANIMATION_SPEED);
+            resizeContent(200);
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#top').css('top') == '0px') {
-            $('#top').animate({ top: -25 });
-            $('#bookmarks').animate({ top: 0 });
-            resizeContent('short');
+            $('#top').animate({ top: -25 }, ANIMATION_SPEED);
+            $('#bookmarks').animate({ top: 0 }, ANIMATION_SPEED);
+            resizeContent(200);
         }
     });
     window.setTimeout(checkArgs, 100);
@@ -139,12 +140,13 @@ var failload = function (error) {
 }
 
 
-var resizeContent = function (height) {
-    const tall = $(window).outerHeight() - 50
-    const short = $(window).outerHeight() - 25
-    switch (height) {
-        case 'tall': { content.animate({ top: '50px', height: tall }); break }
-        case 'short': { content.animate({ top: '25px', height: short }); break }
+const resizeContent = function(speed=ANIMATION_SPEED) {
+    const navbarShrunk = $('#top').css('top') == '-25px'
+    const navbarShrunkHeight = $(window).outerHeight() - 50
+    const navbarExpandedHeight = $(window).outerHeight() - 25
+    switch (navbarShrunk) {
+        case true: { content.animate({ top: '50px', height: navbarShrunkHeight }, speed); break }
+        case false: { content.animate({ top: '25px', height: navbarExpandedHeight }, speed); break }
     }
 }
 
