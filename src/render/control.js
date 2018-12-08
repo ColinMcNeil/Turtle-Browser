@@ -16,6 +16,7 @@ $('#min').on('click', function () {
     remote.getCurrentWindow().minimize();
 })
 $('#max').on('click', function () {
+    console.log(remote.getCurrentWindow().isMaximized())
     switch (remote.getCurrentWindow().isMaximized()) {
         case true: { remote.getCurrentWindow().unmaximize(); break; };
         case false: { remote.getCurrentWindow().maximize(); break; };
