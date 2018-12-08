@@ -74,13 +74,14 @@ doc.ready(function () {
         lastHeight=$(window).height()
     });
     doc.bind('mousewheel', function (e) {
+        let tall = $(window).height() - 50
+        let short = $(window).height() - 25
         if (e.originalEvent.wheelDelta / 120 > 0 && $('#top').css('top')=='-25px') {
-            newH = $(window).height() - 25
             $('#top').animate({ top: 0 });
             $('#bookmarks').animate({ top: 25 });
             content.animate({
                 top: '50px',
-                height: newH
+                height: tall
             })
         }
         else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#top').css('top') == '0px') {
@@ -88,7 +89,7 @@ doc.ready(function () {
             $('#bookmarks').animate({ top: 0 });
             content.animate({
                 top: '25px',
-                height: "100%"
+                height: short
             })
         }
     });

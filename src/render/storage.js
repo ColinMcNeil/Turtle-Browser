@@ -2,8 +2,9 @@ const dialog = require('electron').remote.dialog;
 
 function saveBookmark(name, URL){
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || {}
+    if(!bookmarks[name]) addBookmarkLink(name, URL)
+    else editBookmarkLink(name, URL)
     bookmarks[name] = URL;
-    addBookmarkLink(name, URL)
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks)) 
 }
 
@@ -33,10 +34,16 @@ function importBookmarks(){
 
 function addBookmarkLink(name, URL){
     $( "#bookmarks" ).append( `<a class="bookmark" id=${name} url=${URL}>${name}</a>` );
-    $('.bookmark').click( function () {
+    $(`#${name}`).click( function () {
         const url = $(this).attr("url")
-        loadURL(match(url)) 
+        const matched = match(url)
+        console.log(matched)
+        loadURL(matched) 
     })
+}
+
+function editBookmarkLink(name, URL){
+    $(`#${name}`).attr("url", URL)
 }
 
 function removeBookmarkLink(name){
