@@ -23,7 +23,6 @@ function exportBookmarks(){
 function importBookmarks(){
     if(!confirm('WARNING: This will override existing bookmarks. Continue?')) return
     let path = dialog.showOpenDialog({filters:[{name:'json', extensions:['json']}]})
-    console.log(path[0])
     fs.readFile(path[0], (err, data)=>{
         if(err) throw err
         localStorage.setItem('bookmarks', data) 
@@ -45,7 +44,7 @@ function removeBookmarkLink(name){
 }
 
 function loadBookmarks(){
-    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || {}
     for (let [name, URL] of Object.entries(bookmarks)){
         addBookmarkLink(name, URL)
     }
