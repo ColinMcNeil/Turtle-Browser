@@ -1,6 +1,6 @@
 //Injected JS to every page. 
 const { ipcRenderer } = require('electron')
-const TurtlePackage = require('../../package.json');
+const TurtlePackage = require('../package.json');
 
 window.TurtleVersion = TurtlePackage.version
 
