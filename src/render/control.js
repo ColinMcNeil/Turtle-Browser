@@ -10,13 +10,16 @@ doc.on("mousemove", function (event) {
     }
 });
 $('#close').on('click', function () {
-    ipcRenderer.sendSync('synchronous-message', 'close')
+    remote.getCurrentWindow().close();
 })
 $('#min').on('click', function () {
-    ipcRenderer.sendSync('synchronous-message', 'min')
+    remote.getCurrentWindow().minimize();
 })
 $('#max').on('click', function () {
-    ipcRenderer.sendSync('synchronous-message', 'max')
+    switch (remote.getCurrentWindow().isMaximized()) {
+        case true: { remote.getCurrentWindow().unmaximize(); break; };
+        case false: { remote.getCurrentWindow().maximize(); break; };
+    }
 })
 $('#back').on('click', function () {
     webview.goBack()

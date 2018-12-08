@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, webContents, ipcMain, session } = require('electron')
+const { app, BrowserWindow, session } = require('electron')
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
@@ -63,22 +63,5 @@ app.on('activate', () => {
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
         createWindow()
-    }
-})
-
-ipcMain.on('synchronous-message', (event, arg) => {
-    if (arg == 'close') {
-        app.quit()
-    }
-    if (arg == 'min') {
-        win.minimize();
-    }
-    if (arg == 'max') {
-        if (win.isMaximized()) {
-            win.unmaximize();
-        }
-        else {
-            win.maximize();
-        }
     }
 })
