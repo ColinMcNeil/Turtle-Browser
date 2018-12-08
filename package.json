@@ -7,7 +7,7 @@
     "dev": "npm run uglify && electron .",
     "pack": "build --dir",
     "dist-win": "npm run uglify && build",
-    "uglify": "uglifyjs src/render/index.js src/render/urlMatch.js src/render/control.js src/render/search.js src/render/tab.js -o src-min/out.js"
+    "uglify": "uglifyjs src/render/index.js src/render/urlMatch.js src/render/control.js src/render/search.js src/render/tab.js src/render/commands.js src/render/storage.js -o src-min/out.js"
   },
   "author": "Colin McNeil",
   "license": "ISC",

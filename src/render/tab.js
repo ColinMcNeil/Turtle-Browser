@@ -11,7 +11,6 @@ var loadTab = function (tabToLoad) {
     $('.awebview').each(function (index, elem) {
         $(elem).css('visibility', 'hidden')
         $(elem).attr("id", "hiddentab");
-        //console.log('Found webview '+$(elem).attr('tabID'))
         if ($(elem).attr('tabID') == tabToLoad.id) {
             $(elem).css('visibility', 'visible')
             $(elem).attr("id", "webview");
@@ -36,7 +35,6 @@ class tab {
         this.height = height;
         this.imgsrc = imgsrc;
         this.id = id;
-        console.log('Constructor!')
         this.currwebview = '<webview id="webview" preload="src/preload.js" tabID="' + this.id + '" style="visibility:visible" class="awebview" src="' + URL + '"></webview>'
     }
     /**
@@ -52,7 +50,6 @@ class tab {
     remove(container) {
         $('.webview').each(function (index, elem) {
             if ($(elem).attr('tabID') == this.id.toString()) {
-                console.log('removing webview')
                 $(elem).remove()
             }
         })
@@ -69,15 +66,11 @@ class tab {
             container.push(newtab)
             $('#content').prepend(newtab.currwebview)
             loadTab(newtab)
-            console.log('Removed only tab.')
         }
         for (let i = 0; i < container.length; i++) {
             if (container[i].id == this.id) {
-                console.log(container)
                 container.splice(i, 1)
-                console.log(container)
                 let nextTab = (container[i - 1] ? i - 1 : i)
-                console.log('about to load next tab: ' + nextTab)
                 loadTab(container[nextTab])
                 return;
             }
@@ -105,7 +98,6 @@ const initializeTabs = function () {
             <i class="fa fa-plus-square-o fa-4x" style="position:relative;top: 50%;transform: translateY(-50%);" aria-hidden="true"></i>\
             </div></div>')
         $('.tabPreview').on('click', function () {
-            console.log('tabPreview clicked')
             if ($(this).attr('id') == 'newTab') {
                 tabID += 1;
                 newtab = new tab('pages/homepage.html', $(this).width(), $(this).height(), $(this).attr('src'), tabID)
@@ -114,7 +106,6 @@ const initializeTabs = function () {
                 loadTab(newtab)
             }
             else {
-                console.log(tabContainer)
                 for (let i = 0; i < tabContainer.length; i++) {
                     peekTab = tabContainer[i]
                     if ('tab' + peekTab.id == $(this).attr('id')) {

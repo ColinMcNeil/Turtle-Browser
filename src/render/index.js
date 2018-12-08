@@ -57,36 +57,37 @@ var init_page = function () {
         }
         if (event.channel == "scrollY") {
             currentScroll = event.args[0]
-            console.log(currentScroll)
         }
     })
 }
 
 doc.ready(function () {
     $('.overlay').fadeOut(0)
+    loadBookmarks()
     arg = remote.getGlobal('sharedObj').args[(isDev ? 2 : 1)]
     init_page()
     lastHeight = $(window).height()
     $(window).resize(function () {
         if($(this).height()==lastHeight){return}
-        $('#windowbar').css('top', '-25px');
-        content.css('top', '0')
-        content.css('height', '100%')
+        $('#top').css('top', '0px');
+        $('#bookmarks').css('top', '0px');
         lastHeight=$(window).height()
     });
     doc.bind('mousewheel', function (e) {
-        if (e.originalEvent.wheelDelta / 120 > 0 && $('#windowbar').css('top')=='-25px') {
+        if (e.originalEvent.wheelDelta / 120 > 0 && $('#top').css('top')=='-25px') {
             newH = $(window).height() - 25
-            $('#windowbar').animate({ top: 0 });
+            $('#top').animate({ top: 0 });
+            $('#bookmarks').animate({ top: 25 });
             content.animate({
-                top: '24px',
+                top: '50px',
                 height: newH
             })
         }
-        else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#windowbar').css('top') == '0px') {
-            $('#windowbar').animate({ top: -25 });
+        else if (e.originalEvent.wheelDelta / 120 <= 0 && $('#top').css('top') == '0px') {
+            $('#top').animate({ top: -25 });
+            $('#bookmarks').animate({ top: 0 });
             content.animate({
-                top: '0',
+                top: '25px',
                 height: "100%"
             })
         }
@@ -125,7 +126,6 @@ var checkArgs = function () {
 var loadURL = function (url,scoll=0) { //Defined as an external function for scoping with webview.
     lastScroll = currentScroll;
     $('#search').focusout()
-    console.log('Loading url '+url)
     webview.loadURL(url, {
         extraHeaders:"DNT:1\n"
     })
@@ -136,7 +136,6 @@ var loadURL = function (url,scoll=0) { //Defined as an external function for sco
  */
 var failload = function (error) {
     if (error.errorCode == -105) {
-        console.log('loading')
         webview.loadURL('http://google.com/search?q=' + encodeURI(val))
     }
     if (!online) {

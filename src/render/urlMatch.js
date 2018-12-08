@@ -6,6 +6,9 @@ const match = function (query) {
     if (query.startsWith('file://')) {
         return query;
     }
+    if(query.startsWith(':://')){
+        return 'Run Command: '+query.split(':://')[1]
+    }
     if (query.startsWith('http://') || query.startsWith('https://')) {
         return query;
     }

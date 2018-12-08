@@ -1,5 +1,6 @@
 dist/
 node_modules/
 src-min/
+out.js
 .vscode/
 private.txt

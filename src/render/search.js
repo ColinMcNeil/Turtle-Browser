@@ -2,8 +2,19 @@ $('#search').keyup(function (event) {
     updateSearchText()
     if (event.key == 'Enter') {
         let query = getSearchQuery()
-        $('#search').val('Loading!')
-        if (query) { loadURL(match(query)) }
+        
+        if(query.startsWith(':://')){
+            let command = query.split(':://')[1]
+            console.log(command)
+            if(Object.keys(commands).includes(command)) commands[command]()
+            else alert(`${command} is not a valid command`)
+            return
+        }
+
+        if (query) { 
+            $('#search').val('Loading!')
+            loadURL(match(query)) 
+        }
     }
 })
 

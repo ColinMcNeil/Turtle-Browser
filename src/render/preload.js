@@ -1,6 +1,7 @@
 //Injected JS to every page. 
 const { ipcRenderer } = require('electron')
 const TurtlePackage = require('../../package.json');
+
 window.TurtleVersion = TurtlePackage.version
 
 //Send Do-Not-Track request to every page
@@ -15,11 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!path || !path.includes('http')) { //Sometimes links are not redirects (web apps)
             return;
         }
-        console.log(path)
         e.preventDefault();
         e.stopPropagation();
         setTimeout(function () {
-            console.log(path)
             ipcRenderer.sendToHost('navAttempt', path);
         }, 100);
         return false;
@@ -43,11 +42,6 @@ window.addEventListener('scroll', function (e) {
     }
     ticking = true;
 });
-
-ipcRenderer.on('scrollTo', function (event,args) {
-    console.log(event)
-    console.log(args)
-})
 
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 27) {

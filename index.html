@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <div class="windowbtngroup">
+    <i style="top:0.5px;position:relative" class="fa fa-book windowbtn" id='bkmks' aria-hidden="true"></i>
     <i style="top:2px;position:relative" class="fa fa-wrench windowbtn" id='dev' aria-hidden="true"></i>
     <i style="top:2px;position:relative" class="fa fa-minus windowbtn" id='min' aria-hidden="true"></i>
     <i style="top:1px;position:relative" class="fa fa-square-o windowbtn" id='max' aria-hidden="true"></i>
@@ -14,9 +15,14 @@
 </div>
 
 <!-- Windowbar is used for dragging, closing, minimizing, and maximizing the window. Pops up on scroll up. -->
-<div id='windowbar'>
-    <div class="drag"></div>
+<div class="bar" id='top'>
+    <div class="drag draggable"></div>
 </div>
+
+<div class="bar draggable" id="bookmarks" >
+
+</div>
+
 
 <!-- Navbar is for searching and nav, pops up from bottom. -->
 <div id='mynavbar'>
@@ -33,6 +39,27 @@
         <div class="tabs"></div>
     </div>
     <webview id="webview" class="awebview" tabID="0" src="pages/homepage.html" preload="src/render/preload.js"></webview>
+</div>
+
+
+<div id="bookmarkPopup">
+    
+    <h1>Manage Bookmarks</h1>
+    <div class="inputs">
+        <input type="text" id="bookmarkName" placeholder="Name"/>
+        <input type="text" id="bookmarkUrl" placeholder="URL (only add)"/>
+    </div>
+    <div class="buttons">
+        <button id="addBookmark">Add</button>
+        <button id="removeBookmark">Remove</button>
+
+    </div>
+    <div class="buttons">
+            <button id="import" class="ie">Import</button>
+            <button id="export" class="ie">Export</button>
+    </div>
+    <button id="closePopup">Back</button>
+
 </div>
 
 <!-- Script imports (jquery loaded in head) -->
