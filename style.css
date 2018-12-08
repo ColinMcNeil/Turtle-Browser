@@ -67,6 +67,10 @@ html,body{
     flex-basis: 100%;
     flex-shrink: 100;
 }
+.bookmarkX{
+    top:0;
+    margin-left: 2px;
+}
 #bookmarkPopup{ 
     position: fixed;
     top: 50%;

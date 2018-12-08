@@ -12,7 +12,7 @@ function removeBookmark(name){
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || {}
     delete bookmarks[name];
     removeBookmarkLink(name)
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks)) 
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
 }
 
 function exportBookmarks(){
@@ -35,9 +35,11 @@ function importBookmarks(){
 function addBookmarkLink(name, URL){
     $( "#bookmarks" ).append( `<a class="bookmark" id=${name} url=${URL}>${name}</a>` );
     $(`#${name}`).click( function () {
+        if ($('#bookmarkPopup').css("display")=='flex'){
+            return removeBookmark(name)
+        }
         const url = $(this).attr("url")
         const matched = match(url)
-        console.log(matched)
         loadURL(matched) 
     })
 }

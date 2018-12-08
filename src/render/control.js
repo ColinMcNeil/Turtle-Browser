@@ -28,28 +28,24 @@ $('#back').on('click', function () {
 $('#forward').on('click', function () {
     webview.goForward()
 })
+const delim = 'del '
+
 $('#bkmks').on('click', function () {
     $('#bookmarkPopup').css("display", "flex").hide().fadeIn();
+    $('.bookmark').each((index, element) => {
+        const text = $(element).text()
+        $(element).append(`<i style="position:relative" class="fa fa-times bookmarkX" aria-hidden="true"></i>`)
+    })
 })
 $('#closePopup').on('click', function () {
     $('#bookmarkPopup').fadeOut()
+    $('.bookmarkX').remove()
 })
 
 $('#addBookmark').on('click', function () {
     const name = $('#bookmarkName').val()
     const url = $('#bookmarkUrl').val()
     saveBookmark(name, url)
-})
-
-$('#removeBookmark').on('click', function () {
-    try{
-        const name = $('#bookmarkName').val()
-        removeBookmark(name)
-    }
-    catch(e) {
-        alert(`No bookmark named ${name}`)
-    }
-    
 })
 
 $('#export').on('click', function () {
