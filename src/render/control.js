@@ -9,38 +9,37 @@ doc.on("mousemove", function (event) {
         shown = false;
     }
 });
+
 $('#close').on('click', function () {
     remote.getCurrentWindow().close();
 })
+
 $('#min').on('click', function () {
     remote.getCurrentWindow().minimize();
 })
+
 $('#max').on('click', function () {
-    console.log(window.height);
-    switch (remote.getCurrentWindow().isMaximized()) {
-        case true: { remote.getCurrentWindow().unmaximize(); break; };
-        case false: { remote.getCurrentWindow().maximize(); break; };
-    }
-    switch ($('#top').css('top')=='-25px') {
-        case true: { setTimeout( resizeContent, 100 ) }
-        case false: { setTimeout( resizeContent, 100 ) }
-    }
+    const window = remote.getCurrentWindow()
+    if(window.isMaximized()) window.unmaximize()
+    else window.maximize()
+    setTimeout( resizeContent, 100 )
 })
+
 $('#back').on('click', function () {
     webview.goBack()
 })
+
 $('#forward').on('click', function () {
     webview.goForward()
 })
-const delim = 'del '
 
 $('#bkmks').on('click', function () {
     $('#bookmarkPopup').css("display", "flex").hide().fadeIn(ANIMATION_SPEED);
     $('.bookmark').each((index, element) => {
-        const text = $(element).text()
         $(element).append(`<i style="position:relative" class="fa fa-times bookmarkX" aria-hidden="true"></i>`)
     })
 })
+
 $('#closePopup').on('click', function () {
     $('#bookmarkPopup').fadeOut(ANIMATION_SPEED)
     $('.bookmarkX').remove()
@@ -52,14 +51,9 @@ $('#addBookmark').on('click', function () {
     saveBookmark(name, url)
 })
 
-$('#export').on('click', function () {
-    exportBookmarks()
-})
+$('#export').on('click', exportBookmarks)
 
-$('#import').on('click', function () {
-    importBookmarks()
-})
-
+$('#import').on('click', importBookmarks)
 
 $('#dev').on('click', ()=>webview.openDevTools())
 
