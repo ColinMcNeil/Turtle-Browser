@@ -22,9 +22,6 @@ var lastScroll = 0;
 //Initialize a page - Called on ready and loadTab.
 var init_page = function () {
     var webview = document.querySelector('#webview')
-    var contextMenu = require('electron-context-menu')({
-        window: webview,
-    });
     const indicator = $('.indicator')
     webview.addEventListener('page-title-updated', function () {
         $('#search').val(webview.getURL())

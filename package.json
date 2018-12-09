@@ -1,24 +1,21 @@
 {
   "name": "Turtle-Browser",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "A memory efficient and minimalist browser.",
   "main": "src/main.js",
   "scripts": {
     "dev": "npm run uglify && electron .",
     "pack": "build --dir",
     "dist-win": "npm run uglify && build",
-    "uglify": "uglifyjs src/render/index.js src/render/urlMatch.js src/render/control.js src/render/search.js src/render/tab.js src/render/commands.js src/render/storage.js -o src-min/out.js"
+    "uglify": "terser src/render/index.js src/render/urlMatch.js src/render/control.js src/render/search.js src/render/tab.js src/render/commands.js src/render/storage.js --compress --mangle --source-map -o src-min/out.js"
   },
   "author": "Colin McNeil",
   "license": "ISC",
   "dependencies": {
-    "electron-context-menu": "^0.9.0",
     "electron-is-dev": "^0.1.2",
-    "electron-log": "^2.2.7",
-    "electron-tabs": "^0.6.0",
     "jquery": "^3.2.1",
-    "tldjs": "^1.7.0",
-    "uglify-es": "^3.3.9"
+    "terser": "^3.11.0",
+    "tldjs": "^1.7.0"
   },
   "devDependencies": {
     "electron": "^2.0.0",
