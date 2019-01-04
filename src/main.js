@@ -4,7 +4,7 @@ const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev');
 const fs = require('fs')
-const domains = fs.readFileSync(__dirname + '\\..\\adblock\\domains.csv', 'utf8').split('\n')
+const domains = fs.readFileSync('./adblock/domains.csv', 'utf8').split('\n')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
